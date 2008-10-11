@@ -75,8 +75,8 @@ public class Animador {
 			for(Movie mc:listMovie){
 				if(mc.animavel.getFrameInicio()>=frameCounter) continue;
 				if(mc.animavel.getFrameFinal()<frameCounter){
-					hgr.drawImage(mc.image, (int)mc._x-hx,(int)mc._y, null);
-					hgrb.drawImage(mc.image, (int)mc._x-hx-800,(int)mc._y, null);
+					hgr.drawImage(mc.image, (int)mc._x-hx,(int)mc.animavel.getDestinoY(), null);
+					hgrb.drawImage(mc.image, (int)mc._x-hx-800,(int)mc.animavel.getDestinoY(), null);
 					listMovie.remove(mc);
 				}else{
 					graphics.drawImage(mc.image, (int)mc._x,(int)mc._y, null);
@@ -98,6 +98,7 @@ public class Animador {
 			
 		}
 	}
+	
 	/**
 	 * Anima um objeto
 	 * @param obj
@@ -108,7 +109,9 @@ public class Animador {
 		obj.setBufferedImage(bi);
 		listMovie.add(new Movie(obj));
 	}
-
+	public long getCurrentFrame(){
+		return frameCounter;
+	}
 	public int getVelocidadeHistorico() {
 		return velocidadeHistorico;
 	}
