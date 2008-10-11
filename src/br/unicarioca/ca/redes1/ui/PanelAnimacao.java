@@ -27,7 +27,6 @@ public class PanelAnimacao extends JPanel implements Tela{
 		add(imagem,BorderLayout.CENTER);
 	}
 
-	@Override
 	public void setBufferedImage(BufferedImage bi) {
 		imagem.setIcon(new ImageIcon(bi));
 	}
