@@ -1,5 +1,7 @@
 package br.unicarioca.ca.redes1.vo;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Foge um pouco ao padrão
  * @author Fabio Issamu Oshiro
@@ -7,6 +9,8 @@ package br.unicarioca.ca.redes1.vo;
  */
 public class Animavel {
 	private int id;
+	public float x;
+	public float y;
 	private float origemX;
 	private float origemY;
 	private float destinoX;
@@ -14,6 +18,7 @@ public class Animavel {
 	private long frameInicio;
 	private long frameFinal;
 	private String imagemPath;
+	private BufferedImage bufferedImage;
 	public float getOrigemX() {
 		return origemX;
 	}
@@ -62,4 +67,11 @@ public class Animavel {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public BufferedImage getBufferedImage() {
+		return bufferedImage;
+	}
+	public void setBufferedImage(BufferedImage bufferedImage) {
+		this.bufferedImage = bufferedImage;
+	}
+	
 }
