@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import br.unicarioca.ca.redes1.bo.Animador;
+import br.unicarioca.ca.redes1.vo.Ack;
 import br.unicarioca.ca.redes1.vo.Quadro;
 
 /**
@@ -34,7 +35,7 @@ public class MainFrame extends JFrame{
 	}
 	public void enviarPacote(){
 		try{
-			for(int i=0;i<15;i++){
+			for(int i=0;i<3;i++){
 				Quadro quadro = new Quadro();
 				quadro.setDestinoX(365);
 				quadro.setDestinoY(155);
@@ -43,6 +44,14 @@ public class MainFrame extends JFrame{
 				quadro.setFrameInicio(0+i*30);
 				quadro.setFrameFinal(60+i*30);
 				animador.animar(quadro);
+				Ack ack = new Ack();
+				ack.setOrigemX(365);
+				ack.setOrigemY(155);
+				ack.setDestinoX(365);
+				ack.setDestinoY(54);
+				ack.setFrameInicio(65+i*30);
+				ack.setFrameFinal(125+i*30);
+				animador.animar(ack);
 			}
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
