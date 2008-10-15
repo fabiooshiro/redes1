@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import br.unicarioca.ca.redes1.vo.Animavel;
-import br.unicarioca.ca.redes1.vo.Quadro;
 
 /**
  * Poderíamos chamar de engine
@@ -75,8 +74,16 @@ public class Animador {
 			for(Movie mc:listMovie){
 				if(mc.animavel.getFrameInicio()>=frameCounter) continue;
 				if(mc.animavel.getFrameFinal()<frameCounter){
-					hgr.drawImage(mc.image, (int)mc._x-hx,(int)mc.animavel.getDestinoY(), null);
-					hgrb.drawImage(mc.image, (int)mc._x-hx-800,(int)mc.animavel.getDestinoY(), null);
+					try{
+						hgr.drawImage(mc.image, (int)mc._x-hx,(int)mc.animavel.getDestinoY(), null);
+					}catch(Exception e){
+						
+					}
+					try{
+						hgrb.drawImage(mc.image, (int)mc._x-hx-800,(int)mc.animavel.getDestinoY(), null);
+					}catch(Exception e){
+						
+					}
 					listMovie.remove(mc);
 				}else{
 					graphics.drawImage(mc.image, (int)mc._x,(int)mc._y, null);
