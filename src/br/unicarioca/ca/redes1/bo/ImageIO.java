@@ -1,0 +1,44 @@
+package br.unicarioca.ca.redes1.bo;
+
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
+public class ImageIO {
+	static ImageIO imgIo = new ImageIO();
+	static BufferedImage read(File arq) {
+		String imgName = arq.getPath();
+		try{
+			System.out.println(imgName);
+			BufferedImage retorno = null;
+			if(imgIo==null) System.out.println("jPanel null");
+			URL url = null;
+			String parentPath = "";
+			for(int i=0;i<10;i++){
+				System.out.println("try "+parentPath+imgName.replace("\\", "/"));
+				url = imgIo.getClass().getResource(parentPath+imgName.replace("\\", "/"));
+				if(url!=null) break;
+				parentPath+="../";
+			}
+			if(url==null) System.out.println("url null");
+			ImageIcon imgIcon = new ImageIcon(url);
+			
+			retorno = new BufferedImage(imgIcon.getIconWidth(),imgIcon.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
+			retorno.getGraphics().drawImage(imgIcon.getImage(), 0, 0,null);
+			return retorno;
+		}catch(Exception e){
+			System.out.println("Erro ao abrir a imagem jar " + imgName);
+		}
+		try{
+			return javax.imageio.ImageIO.read(arq);
+		}catch(Exception e){
+			System.out.println("Erro ao abrir a imagem " + imgName);
+		}
+		return null;
+	}
+}

@@ -6,8 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import br.unicarioca.ca.redes1.vo.Animavel;
 
 /**
