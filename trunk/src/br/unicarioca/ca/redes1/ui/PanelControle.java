@@ -8,13 +8,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class PanelControle extends JPanel{
 	private static final long serialVersionUID = -1907642558005285055L;
@@ -65,7 +63,6 @@ public class PanelControle extends JPanel{
 		chkMostrarHistorico = new JCheckBox("Time Line",false);
 		chkMostrarHistorico.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent arg0) {
-				System.out.println(chkMostrarHistorico.isSelected());
 				mainFrame.mostrarHistorico(chkMostrarHistorico.isSelected());
 			}
 		});

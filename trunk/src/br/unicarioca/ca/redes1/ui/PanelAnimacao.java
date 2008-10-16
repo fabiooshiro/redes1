@@ -21,6 +21,7 @@ import br.unicarioca.ca.redes1.bo.Tela;
  *
  */
 public class PanelAnimacao extends JPanel implements Tela{
+	private static final long serialVersionUID = -2356221509796590503L;
 	private JLabel imagem;
 	public PanelAnimacao(){
 		imagem = new JLabel();
