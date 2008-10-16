@@ -42,8 +42,8 @@ public class PanelControle extends JPanel{
 		txtQtd = new JTextField("3");
 		txtIntervalo = new JTextField("20");
 		txtAckDelay = new JTextField("5");
-		txtTaxaPerdaAck = new JTextField("15");
-		txtTaxaPerdaQuadro = new JTextField("15");
+		txtTaxaPerdaAck = new JTextField("0");
+		txtTaxaPerdaQuadro = new JTextField("0");
 		lblTaxaPerdaAck = new JLabel("Erro ACK(%):");
 		lblTaxaPerdaQuadro = new JLabel("Erro(%):");
 		lblTempo = new JLabel("Tempo:");
