@@ -1,9 +1,5 @@
 package br.unicarioca.ca.redes1.bo;
 
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
@@ -14,14 +10,13 @@ public class ImageIO {
 	static BufferedImage read(File arq) {
 		String imgName = arq.getPath();
 		try{
-			System.out.println(imgName);
 			BufferedImage retorno = null;
-			if(imgIo==null) System.out.println("jPanel null");
 			URL url = null;
 			String parentPath = "";
 			for(int i=0;i<10;i++){
-				System.out.println("try "+parentPath+imgName.replace("\\", "/"));
 				url = imgIo.getClass().getResource(parentPath+imgName.replace("\\", "/"));
+				if(url!=null) break;
+				url = imgIo.getClass().getResource((parentPath+imgName).replace("/", "\\"));
 				if(url!=null) break;
 				parentPath+="../";
 			}
