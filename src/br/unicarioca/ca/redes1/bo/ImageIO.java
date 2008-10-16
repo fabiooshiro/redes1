@@ -5,6 +5,10 @@ import java.io.File;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+/**
+ * 
+ * @author Fabio Issamu Oshiro
+ */
 public class ImageIO {
 	static ImageIO imgIo = new ImageIO();
 	static BufferedImage read(File arq) {
