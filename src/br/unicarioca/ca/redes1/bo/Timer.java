@@ -6,7 +6,7 @@ package br.unicarioca.ca.redes1.bo;
  */
 public class Timer extends Thread{
 	private Animador animador;
-	private int fps = 12;
+	private int fps = 10;
 	public Timer(Animador animador) {
 		this.animador = animador;
 	}
