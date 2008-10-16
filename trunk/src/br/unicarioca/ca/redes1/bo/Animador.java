@@ -74,22 +74,16 @@ public class Animador {
 			for(Movie mc:listMovie){
 				if(mc.animavel.getFrameInicio()>=frameCounter) continue;
 				if(mc.animavel.getFrameFinal()<frameCounter){
-					try{
-						hgr.drawImage(mc.image, (int)mc._x-hx,(int)mc.animavel.getDestinoY(), null);
-					}catch(Exception e){
-						
-					}
-					try{
-						hgrb.drawImage(mc.image, (int)mc._x-hx-800,(int)mc.animavel.getDestinoY(), null);
-					}catch(Exception e){
-						
-					}
+					drawImage(hgr,mc,(int)mc._x-hx,(int)mc.animavel.getDestinoY());
+					drawImage(hgrb,mc,(int)mc._x-hx-800,(int)mc.animavel.getDestinoY());
 					listMovie.remove(mc);
 				}else{
-					graphics.drawImage(mc.image, (int)mc._x,(int)mc._y, null);
+					drawImage(graphics,mc,(int)mc._x,(int)mc._y);
 					//marca a linha do historico
-					hgr.drawRect((int)mc._x-hx,(int)(mc._y+mc._height/2), 1, 1);
-					hgrb.drawRect((int)mc._x-hx-800,(int)(mc._y+mc._height/2), 1, 1);
+					drawPoint(hgr,(int)mc._x-hx,(int)(mc._y+mc._height/2));
+					//hgr.drawRect((int)mc._x-hx,(int)(mc._y+mc._height/2), 1, 1);
+					drawPoint(hgrb,(int)mc._x-hx-800,(int)(mc._y+mc._height/2));
+					//hgrb.drawRect((int)mc._x-hx-800,(int)(mc._y+mc._height/2), 1, 1);
 				}
 			}
 			
@@ -105,7 +99,16 @@ public class Animador {
 			
 		}
 	}
-	
+	private void drawPoint(Graphics hgr, int x, int y){
+		hgr.drawRect(x,y, 1, 1);
+	}
+	private void drawImage(Graphics hgr, Movie mc,int x,int y){
+		try{
+			hgr.drawImage(mc.image,x,y, null);
+		}catch(Exception e){
+			
+		}
+	}
 	/**
 	 * Anima um objeto
 	 * @param obj
