@@ -12,6 +12,7 @@ class Movie {
 	float _xinc;
 	float _yinc;
 	float _height;
+	boolean logar=true;
 	BufferedImage image;
 	Animavel animavel;
 	public Movie(Animavel animavel){

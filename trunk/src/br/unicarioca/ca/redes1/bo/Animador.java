@@ -28,6 +28,7 @@ public class Animador {
 	private BufferedImage fundo;
 	private Tela tela;
 	private int velocidadeHistorico;
+	private boolean mostrarHistorico;
 	public Animador(Tela tela) throws Exception {
 		listMovie = new ArrayList<Movie>();
 		bufferedImage = new BufferedImage(width,420,BufferedImage.TYPE_INT_ARGB);
@@ -74,21 +75,22 @@ public class Animador {
 			for(Movie mc:listMovie){
 				if(mc.animavel.getFrameInicio()>=frameCounter) continue;
 				if(mc.animavel.getFrameFinal()<frameCounter){
-					drawImage(hgr,mc,(int)mc._x-hx,(int)mc.animavel.getDestinoY());
-					drawImage(hgrb,mc,(int)mc._x-hx-800,(int)mc.animavel.getDestinoY());
+					if(mc.logar){
+						drawImage(hgr,mc,(int)mc._x-hx,(int)mc.animavel.getDestinoY(),Color.WHITE);
+						drawImage(hgrb,mc,(int)mc._x-hx-800,(int)mc.animavel.getDestinoY(),Color.WHITE);
+					}
 					listMovie.remove(mc);
 				}else{
 					drawImage(graphics,mc,(int)mc._x,(int)mc._y);
 					//marca a linha do historico
 					drawPoint(hgr,(int)mc._x-hx,(int)(mc._y+mc._height/2));
-					//hgr.drawRect((int)mc._x-hx,(int)(mc._y+mc._height/2), 1, 1);
 					drawPoint(hgrb,(int)mc._x-hx-800,(int)(mc._y+mc._height/2));
-					//hgrb.drawRect((int)mc._x-hx-800,(int)(mc._y+mc._height/2), 1, 1);
 				}
 			}
-			
-			bufferedImage.getGraphics().drawImage(hist[hflag%2],hx,0,null);
-			bufferedImage.getGraphics().drawImage(hist[(hflag+1)%2],800+hx,0,null);
+			if(this.mostrarHistorico){
+				bufferedImage.getGraphics().drawImage(hist[hflag%2],hx,0,null);
+				bufferedImage.getGraphics().drawImage(hist[(hflag+1)%2],800+hx,0,null);
+			}
 			if(hx<-800){
 				hx=0;
 				hist[hflag%2]=ImageIO.read(new File("images/hist.png"));
@@ -101,6 +103,13 @@ public class Animador {
 	}
 	private void drawPoint(Graphics hgr, int x, int y){
 		hgr.drawRect(x,y, 1, 1);
+	}
+	private void drawImage(Graphics hgr, Movie mc,int x,int y,Color color){
+		try{
+			hgr.drawImage(mc.image,x,y,color, null);
+		}catch(Exception e){
+			
+		}
 	}
 	private void drawImage(Graphics hgr, Movie mc,int x,int y){
 		try{
@@ -119,6 +128,13 @@ public class Animador {
 		obj.setBufferedImage(bi);
 		listMovie.add(new Movie(obj));
 	}
+	public void animar(Animavel obj,boolean logar) throws Exception{
+		BufferedImage bi = ImageIO.read(new File(obj.getImagemPath()));
+		obj.setBufferedImage(bi);
+		Movie mov = new Movie(obj);
+		mov.logar = logar;
+		listMovie.add(mov);
+	}
 	public long getCurrentFrame(){
 		return frameCounter;
 	}
@@ -128,5 +144,9 @@ public class Animador {
 
 	public void setVelocidadeHistorico(int velocidadeHistorico) {
 		this.velocidadeHistorico = velocidadeHistorico;
+	}
+
+	public void mostrarHistorico(boolean selected) {
+		this.mostrarHistorico = selected;
 	}
 }
