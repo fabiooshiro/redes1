@@ -11,19 +11,19 @@ class Movie {
 	float _x;
 	float _xinc;
 	float _yinc;
-	float _height;
+	int _height;
 	boolean logar=true;
 	BufferedImage image;
 	Animavel animavel;
 	public Movie(Animavel animavel){
 		this.animavel = animavel;
 		this.image = animavel.getBufferedImage();
-		_y = animavel.getOrigemY();
+		_y = (int)animavel.getOrigemY();
 		_height=image.getHeight();
-		_x = animavel.getOrigemX();
+		_x = (int)animavel.getOrigemX();
 		long tx = animavel.getFrameFinal() - animavel.getFrameInicio();
 		_xinc = (animavel.getDestinoX()-animavel.getOrigemX())/tx;
-		_yinc = (animavel.getDestinoY()-animavel.getOrigemY())/tx;
+		_yinc = (float)(animavel.getDestinoY()-animavel.getOrigemY())/(float)tx;
 		
 		id = ids++;
 	}
