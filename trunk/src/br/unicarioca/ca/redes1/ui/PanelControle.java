@@ -18,7 +18,6 @@ public class PanelControle extends JPanel{
 	private static final long serialVersionUID = -1907642558005285055L;
 	MainFrame mainFrame;
 	JButton btnEnviarPacote;
-	JButton btnEmitirOnda;
 	JTextField txtTaxaPerdaQuadro;
 	JTextField txtTaxaPerdaAck;
 	JTextField txtTempo;
@@ -37,7 +36,6 @@ public class PanelControle extends JPanel{
 	public PanelControle(final MainFrame mainFrame) {
 		this.mainFrame=mainFrame;
 		btnEnviarPacote=new JButton("Enviar");
-		btnEmitirOnda=new JButton("Emitir Onda");
 		txtTempo = new JTextField("45");
 		txtQtd = new JTextField("3");
 		txtIntervalo = new JTextField("20");
@@ -50,12 +48,6 @@ public class PanelControle extends JPanel{
 		lblQtd = new JLabel("QTD.:");
 		lblIntervalo = new JLabel("Intervalo:");
 		lblAckDelay = new JLabel("Ack delay:");
-		
-		btnEmitirOnda.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				enviarOnda();	
-			}			
-		});
 		btnEnviarPacote.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				enviar();	
@@ -93,13 +85,11 @@ public class PanelControle extends JPanel{
 		panelTop.add(txtTaxaPerdaAck);
 		
 		panelTop.add(btnEnviarPacote);
-		panelTop.add(btnEmitirOnda);
 		this.add(panelTop,BorderLayout.NORTH);
 		this.add(panelCenter,BorderLayout.CENTER);
 		this.setPreferredSize(new Dimension(800,330));
 	}
 	private void enviar(){
-		
 		try{
 			int ackDelay = Integer.valueOf(txtAckDelay.getText());
 			int intervalo = Integer.valueOf(txtIntervalo.getText());
@@ -108,16 +98,6 @@ public class PanelControle extends JPanel{
 			int taxaErro = Integer.valueOf(txtTaxaPerdaQuadro.getText());
 			int taxaErroAck = Integer.valueOf(txtTaxaPerdaAck.getText());
 			this.mainFrame.enviarPacote(qtd, tempo, intervalo, ackDelay,taxaErro,taxaErroAck);
-			
-			
-		}catch(Exception e){
-			JOptionPane.showMessageDialog(this,e.getMessage());
-		}
-	}
-	
-	private void enviarOnda(){
-		try{
-			this.mainFrame.enviarOnda();
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
