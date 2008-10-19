@@ -126,7 +126,7 @@ public class MainFrame extends JFrame{
 	
 	
 	public void enviarOnda()throws Exception{
-		int tempo=50;
+		//int tempo=50;
 		try{
 			/*
 				long cframe = animador.getCurrentFrame();
