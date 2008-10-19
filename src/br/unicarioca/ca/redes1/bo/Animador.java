@@ -14,7 +14,6 @@ import br.unicarioca.ca.redes1.vo.Animavel;
  *
  */
 public class Animador {
-	
 	private Timer timer;
 	private long frameCounter;
 	private ArrayList<Movie> listMovie;
@@ -46,18 +45,13 @@ public class Animador {
 	 * Qualquer semelhança com o Flash é mera coincidência
 	 */
 	private void onEnterFrame() throws Exception{
-		for(Movie mc:listMovie){
-			if(mc.animavel.getFrameInicio()>=frameCounter) continue;
-			mc._x+=mc._xinc;
-			mc._y+=mc._yinc;
-		}
 		
 	}
 	
 	/**
 	 * Chamado pelo timer
 	 */
-	void timeOut(){
+	synchronized void timeOut(){
 		try{
 			frameCounter++;
 			onEnterFrame();
@@ -71,20 +65,29 @@ public class Animador {
 			hgrb = hist[(hflag+1)%2].getGraphics();
 			hgrb.setColor(Color.GRAY);
 			hgr.setColor(Color.GRAY);
-			for(Movie mc:listMovie){
+			int tot = listMovie.size();
+			ArrayList<Movie> retirar = new ArrayList<Movie>();
+			for(int i=0;i<tot;i++){
+				Movie mc = listMovie.get(i);
 				if(mc.animavel.getFrameInicio()>=frameCounter) continue;
+				mc._x+=mc._xinc;
+				mc._y+=mc._yinc;
 				if(mc.animavel.getFrameFinal()<frameCounter){
 					if(mc.logar){
 						drawImage(hgr,mc,(int)mc._x-hx,(int)mc.animavel.getDestinoY(),Color.WHITE);
 						drawImage(hgrb,mc,(int)mc._x-hx-800,(int)mc.animavel.getDestinoY(),Color.WHITE);
 					}
-					listMovie.remove(mc);
+					retirar.add(mc);
+					
 				}else{
 					drawImage(graphics,mc,(int)mc._x,(int)mc._y);
 					//marca a linha do historico
 					drawPoint(hgr,(int)mc._x-hx,(int)(mc._y+mc._height/2));
 					drawPoint(hgrb,(int)mc._x-hx-800,(int)(mc._y+mc._height/2));
 				}
+			}
+			for (Movie movie : retirar) {
+				listMovie.remove(movie);	
 			}
 			if(this.mostrarHistorico){
 				bufferedImage.getGraphics().drawImage(hist[hflag%2],hx,0,null);
@@ -97,7 +100,7 @@ public class Animador {
 			}
 			tela.setBufferedImage(bufferedImage);
 		}catch(Exception e){
-			
+			e.printStackTrace();
 		}
 	}
 	private void drawPoint(Graphics hgr, int x, int y){
@@ -125,17 +128,13 @@ public class Animador {
 	public void animar(Animavel obj) throws Exception{
 		BufferedImage bi = ImageIO.read(new File(obj.getImagemPath()));
 		obj.setBufferedImage(bi);
-		Movie mov=new Movie(obj);
-		ColidListenerThread.addMovie(mov);
-		listMovie.add(mov);
+		listMovie.add(new Movie(obj));
 	}
 	public void animar(Animavel obj,boolean logar) throws Exception{
 		BufferedImage bi = ImageIO.read(new File(obj.getImagemPath()));
 		obj.setBufferedImage(bi);
-	
 		Movie mov = new Movie(obj);
 		mov.logar = logar;
-		ColidListenerThread.addMovie(mov);
 		listMovie.add(mov);
 	}
 	public long getCurrentFrame(){

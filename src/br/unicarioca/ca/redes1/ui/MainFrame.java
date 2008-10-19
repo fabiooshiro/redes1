@@ -9,9 +9,7 @@ import javax.swing.JOptionPane;
 
 
 import br.unicarioca.ca.redes1.bo.Animador;
-import br.unicarioca.ca.redes1.bo.ColidListenerThread;
 import br.unicarioca.ca.redes1.vo.Ack;
-import br.unicarioca.ca.redes1.vo.Onda;
 import br.unicarioca.ca.redes1.vo.Quadro;
 
 /**
@@ -130,6 +128,7 @@ public class MainFrame extends JFrame{
 	public void enviarOnda()throws Exception{
 		int tempo=50;
 		try{
+			/*
 				long cframe = animador.getCurrentFrame();
 				Onda onda = new Onda();
 				onda.setImagemPath("images/onda.gif");
@@ -139,7 +138,7 @@ public class MainFrame extends JFrame{
 				onda.setFrameInicio(cframe);
 				onda.setDestinoY(Y_TRANSMISSOR+30);
 				onda.setFrameFinal(cframe+tempo);
-				animador.animar(onda);
+				animador.animar(onda);*/
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
@@ -152,7 +151,7 @@ public class MainFrame extends JFrame{
 		try{
 			
 			new MainFrame();
-			new Thread(new ColidListenerThread()).start();
+			//new Thread(new ColidListenerThread()).start();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
