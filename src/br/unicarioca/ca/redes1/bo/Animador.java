@@ -130,6 +130,12 @@ public class Animador {
 		obj.setBufferedImage(bi);
 		listMovie.add(new Movie(obj));
 	}
+	/**
+	 * 
+	 * @param obj objeto para animar
+	 * @param logar logar no historico
+	 * @throws Exception algum erro
+	 */
 	public void animar(Animavel obj,boolean logar) throws Exception{
 		BufferedImage bi = ImageIO.read(new File(obj.getImagemPath()));
 		obj.setBufferedImage(bi);
