@@ -60,7 +60,6 @@ public class Animador {
 			Graphics hgr;
 			Graphics hgrb;
 			hx-=velocidadeHistorico;
-			
 			hgr = hist[hflag%2].getGraphics();
 			hgrb = hist[(hflag+1)%2].getGraphics();
 			hgrb.setColor(Color.GRAY);
@@ -78,7 +77,6 @@ public class Animador {
 						drawImage(hgrb,mc,(int)mc._x-hx-800,(int)mc.animavel.getDestinoY(),Color.WHITE);
 					}
 					retirar.add(mc);
-					
 				}else{
 					drawImage(graphics,mc,(int)mc._x,(int)mc._y);
 					//marca a linha do historico
