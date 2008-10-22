@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 
 import br.unicarioca.ca.redes1.bo.Animador;
 import br.unicarioca.ca.redes1.vo.Ack;
+import br.unicarioca.ca.redes1.vo.Animavel;
 import br.unicarioca.ca.redes1.vo.Quadro;
+import br.unicarioca.ca.redes1.vo.TimeOut;
 
 /**
  * Só por trocadilho
@@ -61,6 +63,7 @@ public class MainFrame extends JFrame{
 		try{
 			for(int i=0;i<qtd;i++){
 				long cframe = animador.getCurrentFrame();
+				setTimeOut(tempo, intervalo, ackDelay, i, cframe);
 				Quadro quadro = new Quadro();
 				quadro.setImagemPath("images/pacote"+i+".png");
 				
@@ -84,6 +87,7 @@ public class MainFrame extends JFrame{
 					perdido.setFrameFinal(quadro.getFrameFinal()+1);
 					animador.animar(perdido);
 					animador.animar(quadro,false);
+					enviarNovamente(tempo, intervalo, ackDelay, i, cframe);
 				}else{					
 					quadro.setDestinoY(Y_RECEPTOR);
 					quadro.setFrameFinal(cframe+tempo+i*intervalo);
@@ -110,20 +114,55 @@ public class MainFrame extends JFrame{
 						perdido.setFrameFinal(ack.getFrameFinal()+1);
 						animador.animar(perdido);
 						animador.animar(ack,false);
+						enviarNovamente(tempo, intervalo, ackDelay, i, cframe);
 					}else{
 						ack.setDestinoY(Y_TRANSMISSOR);
 						ack.setFrameFinal(cframe+tempo+tempo+ackDelay+i*intervalo);
 						animador.animar(ack);
 					}
 				}
-				
-				
 			}
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
 	}
-	
+	private void enviarNovamente(int tempo, int intervalo, int ackDelay, int i,long cframe) throws Exception {
+		Quadro retrans = new Quadro();
+		setCaminhoTrans2Recep(retrans);
+		retrans.setImagemPath("images/pacote"+i+".png");
+		retrans.setFrameInicio(cframe+2*tempo+ackDelay+i*intervalo);
+		retrans.setFrameFinal(cframe+3*tempo+ackDelay+i*intervalo);
+		animador.animar(retrans);
+		Ack ack = new Ack();
+		setCaminhoRecep2Trans(ack);
+		ack.setImagemPath("images/ack"+i+".png");
+		ack.setFrameInicio(cframe+3*tempo+2*ackDelay+i*intervalo);
+		ack.setFrameFinal(cframe+4*tempo+2*ackDelay+i*intervalo);
+		animador.animar(ack);
+		setTimeOut(tempo, intervalo, 4*ackDelay+3, i, cframe+2*tempo);
+	}
+	private void setTimeOut(int tempo, int intervalo, int ackDelay, int i, long cframe) throws Exception {
+			TimeOut timeOut = new TimeOut();
+			timeOut.setDestinoY(Y_TRANSMISSOR-10);
+			timeOut.setOrigemY(timeOut.getDestinoY());
+			timeOut.setOrigemX(X_TRANSMISSOR+8*tempo+intervalo+ackDelay+3);
+			timeOut.setDestinoX(timeOut.getOrigemX());
+			timeOut.setFrameInicio(cframe+i*intervalo);
+			timeOut.setFrameInicio(cframe+i*intervalo+1);
+			animador.animar(timeOut);
+	}
+	private void setCaminhoRecep2Trans(Animavel ack){
+		ack.setOrigemX(X_TRANSMISSOR+10);
+		ack.setOrigemY(Y_RECEPTOR);
+		ack.setDestinoX(ack.getOrigemX());
+		ack.setDestinoY(Y_TRANSMISSOR);
+	}
+	private void setCaminhoTrans2Recep(Quadro quadro){
+		quadro.setOrigemX(X_TRANSMISSOR-5);
+		quadro.setOrigemY(Y_TRANSMISSOR);
+		quadro.setDestinoX(quadro.getOrigemX());
+		quadro.setDestinoY(Y_RECEPTOR);
+	}
 	
 	public void enviarOnda()throws Exception{
 		//int tempo=50;
