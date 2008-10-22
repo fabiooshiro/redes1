@@ -160,4 +160,7 @@ public class MainFrame extends JFrame{
 		animador.mostrarHistorico(selected);
 		
 	}
+	public Animador getAnimador() {
+		return animador;
+	}
 }

@@ -155,4 +155,18 @@ public class Animador {
 	public void mostrarHistorico(boolean selected) {
 		this.mostrarHistorico = selected;
 	}
+	public void trocarImagemByIdAnimavel(int id, String imagem) {
+		for(int i=0;i<listMovie.size();i++){
+			if(listMovie.get(i).animavel.getId()==id){
+				listMovie.get(i).image = ImageIO.read(new File(imagem));
+			}
+		}
+	}
+	public void trocarImagemByIdMovie(long id, String imagem) {
+		for(int i=0;i<listMovie.size();i++){
+			if(listMovie.get(i).getId()==id){
+				listMovie.get(i).image = ImageIO.read(new File(imagem));
+			}
+		}
+	}
 }
