@@ -18,6 +18,7 @@ public class PanelControle extends JPanel{
 	private static final long serialVersionUID = -1907642558005285055L;
 	MainFrame mainFrame;
 	JButton btnEnviarPacote;
+	JButton btnTrocaImagem;
 	JTextField txtTaxaPerdaQuadro;
 	JTextField txtTaxaPerdaAck;
 	JTextField txtTempo;
@@ -33,9 +34,11 @@ public class PanelControle extends JPanel{
 	JLabel lblAckDelay;
 	JPanel panelTop = new JPanel();
 	JPanel panelCenter = new JPanel();
+	
 	public PanelControle(final MainFrame mainFrame) {
 		this.mainFrame=mainFrame;
 		btnEnviarPacote=new JButton("Enviar");
+		btnTrocaImagem= new JButton("Trocar");
 		txtTempo = new JTextField("45");
 		txtQtd = new JTextField("3");
 		txtIntervalo = new JTextField("20");
@@ -52,6 +55,11 @@ public class PanelControle extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				enviar();	
 			}			
+		});
+		btnTrocaImagem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				trocarImagem();	
+			}
 		});
 		Dimension txtDimension = new Dimension(35,26);
 		txtIntervalo.setPreferredSize(txtDimension);
@@ -85,6 +93,8 @@ public class PanelControle extends JPanel{
 		panelTop.add(txtTaxaPerdaAck);
 		
 		panelTop.add(btnEnviarPacote);
+		
+		panelTop.add(btnTrocaImagem);
 		this.add(panelTop,BorderLayout.NORTH);
 		this.add(panelCenter,BorderLayout.CENTER);
 		this.setPreferredSize(new Dimension(800,330));
@@ -101,5 +111,8 @@ public class PanelControle extends JPanel{
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
+	}
+	private void trocarImagem(){
+		this.mainFrame.getAnimador().trocarImagemByIdMovie(2L,"images/pacote.jpg");
 	}
 }

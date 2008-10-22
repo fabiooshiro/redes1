@@ -32,4 +32,7 @@ class Movie {
 		if(mc.id==this.id) return true;
 		return false;
 	}
+	public long getId() {
+		return id;
+	}
 }
