@@ -9,6 +9,10 @@ import javax.swing.JOptionPane;
 
 
 import br.unicarioca.ca.redes1.bo.Animador;
+import br.unicarioca.ca.redes1.protocolo.CamadaFisica;
+import br.unicarioca.ca.redes1.protocolo.InterfaceTransmissor;
+import br.unicarioca.ca.redes1.protocolo.Receptor;
+import br.unicarioca.ca.redes1.protocolo.Transmissor;
 import br.unicarioca.ca.redes1.vo.Ack;
 import br.unicarioca.ca.redes1.vo.Animavel;
 import br.unicarioca.ca.redes1.vo.Quadro;
@@ -31,7 +35,9 @@ public class MainFrame extends JFrame{
 	private static final int MAX_QUANTIDADE = 10;
 	private PanelAnimacao panelAnimacao;
 	private PanelControle panelControle;
-	private Animador animador;
+	private static Animador animador;
+	private InterfaceTransmissor transmissor;
+	private Receptor receptor;
 	public MainFrame() throws Exception{
 		super("Transmissão");
 		panelAnimacao = new PanelAnimacao();
@@ -39,10 +45,23 @@ public class MainFrame extends JFrame{
 		add(panelAnimacao,BorderLayout.CENTER);
 		add(panelControle,BorderLayout.SOUTH);
 		animador = new Animador(panelAnimacao);
+		CamadaFisica.setAnimador(animador);
+		transmissor = new Transmissor();
+		receptor = new Receptor();
+		CamadaFisica camadaFisica = CamadaFisica.getInstance();
+		camadaFisica.setReceptor(receptor);
+		camadaFisica.setTransmissor((Transmissor) transmissor);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setPreferredSize(new Dimension(800,600));
 		this.pack();
 		this.setVisible(true);
+	}
+	public void enviarQuadros(int qtd){
+		try{
+			transmissor.enviarQuadros(qtd);
+		}catch(Exception e){
+			
+		}
 	}
 	public void enviarPacote(int qtd,int tempo,int intervalo,int ackDelay,int taxaErro,int taxaErroAck)throws Exception{
 		if(qtd<=0){
@@ -199,7 +218,7 @@ public class MainFrame extends JFrame{
 		animador.mostrarHistorico(selected);
 		
 	}
-	public Animador getAnimador() {
+	public static Animador getAnimador() {
 		return animador;
 	}
 }

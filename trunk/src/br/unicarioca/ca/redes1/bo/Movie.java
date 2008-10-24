@@ -7,7 +7,7 @@ import br.unicarioca.ca.redes1.vo.Animavel;
  * Aluzão ao movie do flash
  * @author Fabio Issamu Oshiro
  */
-class Movie {
+public class Movie {
 	private static long ids = 0;
 	private long id;
 	float _y;
@@ -36,5 +36,10 @@ class Movie {
 	}
 	public long getId() {
 		return id;
+	}
+	public Animavel getAnimavel() {
+		animavel.x=_x;
+		animavel.y=_y;
+		return animavel;
 	}
 }

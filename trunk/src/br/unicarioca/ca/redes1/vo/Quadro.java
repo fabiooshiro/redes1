@@ -11,6 +11,7 @@ public class Quadro extends Animavel{
 	}
 
 	public void setNumero(int numero) {
+		setImagemPath("images/pacote"+numero+".png");
 		this.numero = numero;
 	}
 	
