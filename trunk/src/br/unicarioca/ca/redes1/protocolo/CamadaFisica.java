@@ -1,6 +1,7 @@
 package br.unicarioca.ca.redes1.protocolo;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import br.unicarioca.ca.redes1.bo.Animador;
 import br.unicarioca.ca.redes1.bo.FimAnimacaoListener;
@@ -19,6 +20,8 @@ public class CamadaFisica implements FimAnimacaoListener{
 	private static long autoIncAnimacao=0;
 	private HashMap<Long,Quadro> quadrosCirculando = new HashMap<Long,Quadro>();
 	private HashMap<Long,Ack> acksCirculando = new HashMap<Long,Ack>();
+	private int taxaErro = 30;
+	private int taxaErroAck = 30;
 	private CamadaFisica(){
 		instance = this;
 		animador.addFimAnimacaoListener(this);
@@ -39,8 +42,26 @@ public class CamadaFisica implements FimAnimacaoListener{
 		acksCirculando.put(ack.getId(), ack);
 		setCaminhoRecep2Trans(ack);
 		ack.setFrameInicio(animador.getCurrentFrame());
-		ack.setFrameFinal(animador.getCurrentFrame()+velocidadeCanal/(1000/animador.getFps()));
-		animador.animar(ack);
+		long frameFinal = velocidadeCanal/(1000/animador.getFps());
+		ack.setFrameFinal(animador.getCurrentFrame()+frameFinal);
+		Random rd = new Random();
+		int sorte = rd.nextInt(100)+1;
+		if(sorte>taxaErroAck){
+			animador.animar(ack);
+		}else{
+			ack.setDestinoY((MainFrame.Y_RECEPTOR-MainFrame.Y_TRANSMISSOR)/2+MainFrame.Y_TRANSMISSOR);
+			ack.setFrameFinal(animador.getCurrentFrame()+frameFinal/2);
+			Quadro perdido = new Quadro();
+			perdido.setImagemPath("images/puffack.png");
+			perdido.setOrigemX(ack.getOrigemX());
+			perdido.setOrigemY(ack.getDestinoY());
+			perdido.setDestinoX(ack.getDestinoX());
+			perdido.setDestinoY(ack.getDestinoY()-10);
+			perdido.setFrameInicio(ack.getFrameFinal());
+			perdido.setFrameFinal(ack.getFrameFinal()+1);
+			animador.animar(perdido);
+			animador.animar(ack,false);
+		}
 	}
 	/**
 	 * Envia um quadro para o receptor
@@ -52,12 +73,32 @@ public class CamadaFisica implements FimAnimacaoListener{
 		quadro.setOrigemX(MainFrame.X_TRANSMISSOR-5);
 		quadro.setOrigemY(MainFrame.Y_TRANSMISSOR);
 		quadro.setDestinoX(MainFrame.X_TRANSMISSOR-5);
-		quadro.setDestinoY(MainFrame.Y_RECEPTOR);
 		quadro.setFrameInicio(animador.getCurrentFrame());
-		quadro.setFrameFinal(animador.getCurrentFrame()+velocidadeCanal/(1000/animador.getFps()));
+		long frameFinal = velocidadeCanal/(1000/animador.getFps());
+		Random rd = new Random();
+		int sorte = rd.nextInt(100)+1;
+		if(sorte>taxaErro){
+			quadro.setDestinoY(MainFrame.Y_RECEPTOR);
+			quadro.setFrameFinal(animador.getCurrentFrame()+frameFinal);
+			animador.animar(quadro);
+		}else{
+			//erro
+			quadro.setDestinoY((MainFrame.Y_RECEPTOR-MainFrame.Y_TRANSMISSOR)/2+MainFrame.Y_TRANSMISSOR);
+			quadro.setFrameFinal(animador.getCurrentFrame()+frameFinal/2);
+			Quadro perdido = new Quadro();
+			perdido.setImagemPath("images/puff.png");
+			perdido.setOrigemX(quadro.getOrigemX());
+			perdido.setOrigemY(quadro.getDestinoY());
+			perdido.setDestinoX(quadro.getDestinoX());
+			perdido.setDestinoY(quadro.getDestinoY()+5);
+			perdido.setFrameInicio(quadro.getFrameFinal());
+			perdido.setFrameFinal(quadro.getFrameFinal()+1);
+			animador.animar(perdido);
+			animador.animar(quadro,false);
+		}
 		quadro.setId(quadro.getNumero());
 		quadrosCirculando.put(quadro.getId(),quadro);
-		animador.animar(quadro);
+		
 	}
 	
 	private void setCaminhoRecep2Trans(Animavel ack){
@@ -86,7 +127,7 @@ public class CamadaFisica implements FimAnimacaoListener{
 				quadrosCirculando.remove(animavel.getId());
 			}
 		}
-		if(animavel.y<MainFrame.Y_RECEPTOR+1){
+		if(animavel.y<MainFrame.Y_TRANSMISSOR+1){
 			Ack ack = acksCirculando.get(animavel.getId());
 			if(ack!=null){
 				transmissor.receberAck(ack);

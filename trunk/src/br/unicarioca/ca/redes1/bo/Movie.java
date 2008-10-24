@@ -15,6 +15,7 @@ public class Movie {
 	float _xinc;
 	float _yinc;
 	int _height;
+	int _width;
 	boolean logar = true;
 	BufferedImage image;
 	Animavel animavel;
@@ -23,6 +24,7 @@ public class Movie {
 		this.image = animavel.getBufferedImage();
 		_y = (int) animavel.getOrigemY();
 		_height = image.getHeight();
+		_width = image.getWidth();
 		_x = (int) animavel.getOrigemX();
 		long tx = animavel.getFrameFinal() - animavel.getFrameInicio();
 		_xinc = (animavel.getDestinoX() - animavel.getOrigemX()) / tx;
