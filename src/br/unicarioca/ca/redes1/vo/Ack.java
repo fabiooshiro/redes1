@@ -7,6 +7,7 @@ public class Ack extends Animavel{
 	}
 
 	public void setNumero(int numero) {
+		setImagemPath("images/ack"+numero+".png");
 		this.numero=numero;
 	}
 	public int getNumero(){

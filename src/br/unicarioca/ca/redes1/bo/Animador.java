@@ -80,8 +80,8 @@ public class Animador {
 				}else{
 					drawImage(graphics,mc,(int)mc._x,(int)mc._y);
 					//marca a linha do historico
-					drawPoint(hgr,(int)mc._x-hx,(int)(mc._y+mc._height/2));
-					drawPoint(hgrb,(int)mc._x-hx-800,(int)(mc._y+mc._height/2));
+					drawPoint(hgr,(int)mc._x-hx+mc._width/2,(int)(mc._y+mc._height/2));
+					drawPoint(hgrb,(int)mc._x-hx-800+mc._width/2,(int)(mc._y+mc._height/2));
 				}
 			}
 			for (Movie movie : retirar) {

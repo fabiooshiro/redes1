@@ -15,13 +15,14 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 		timeOut = this;
 		this.setImagemPath("images/clockp.png");
 		this.setDestinoY(MainFrame.Y_TRANSMISSOR);
-		this.setDestinoX(MainFrame.X_TRANSMISSOR);
+		
 		int tQ = (int)tempoMs/(1000/animador.getFps());
 		int tX = tQ*animador.getVelocidadeHistorico();
 		this.setOrigemX(MainFrame.X_TRANSMISSOR+tX);
+		this.setDestinoX(MainFrame.X_TRANSMISSOR+tX-animador.getVelocidadeHistorico());
 		this.setOrigemY(MainFrame.Y_TRANSMISSOR);
 		this.setFrameInicio(animador.getCurrentFrame());
-		this.setFrameFinal(animador.getCurrentFrame()+tQ);
+		this.setFrameFinal(animador.getCurrentFrame()+1);
 		animador.animar(this);
 		initTimeOut();
 	}
