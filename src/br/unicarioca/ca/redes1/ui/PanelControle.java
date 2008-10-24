@@ -107,12 +107,13 @@ public class PanelControle extends JPanel{
 			int tempo = Integer.valueOf(txtTempo.getText());
 			int taxaErro = Integer.valueOf(txtTaxaPerdaQuadro.getText());
 			int taxaErroAck = Integer.valueOf(txtTaxaPerdaAck.getText());
-			this.mainFrame.enviarPacote(qtd, tempo, intervalo, ackDelay,taxaErro,taxaErroAck);
+			this.mainFrame.enviarQuadros(qtd);
+			//this.mainFrame.enviarPacote(qtd, tempo, intervalo, ackDelay,taxaErro,taxaErroAck);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
 	}
 	private void trocarImagem(){
-		this.mainFrame.getAnimador().trocarImagemByIdMovie(2L,"images/pacote.jpg");
+		MainFrame.getAnimador().trocarImagemByIdMovie(2L,"images/pacote.jpg");
 	}
 }

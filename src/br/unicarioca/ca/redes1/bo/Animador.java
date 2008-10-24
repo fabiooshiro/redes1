@@ -18,7 +18,7 @@ public class Animador {
 	private long frameCounter;
 	private ArrayList<Movie> listMovie;
 	private BufferedImage bufferedImage;
-	//private BufferedImage historico;
+	private ArrayList<FimAnimacaoListener> listFimAnimacaoListener = new ArrayList<FimAnimacaoListener>();
 	private BufferedImage hist[]=new BufferedImage[2];
 	private int hx=0;
 	private int hflag=0;
@@ -85,6 +85,9 @@ public class Animador {
 				}
 			}
 			for (Movie movie : retirar) {
+				for(FimAnimacaoListener listener:listFimAnimacaoListener){
+					listener.fimDaAnimacao(movie.getAnimavel());
+				}
 				listMovie.remove(movie);	
 			}
 			if(this.mostrarHistorico){
@@ -169,4 +172,14 @@ public class Animador {
 			}
 		}
 	}
+
+	public void addFimAnimacaoListener(FimAnimacaoListener fimAnimacaoListener) {
+		listFimAnimacaoListener.add(fimAnimacaoListener);
+	}
+
+	public int getFps() {
+		return timer.getFps();
+	}
+
+	
 }

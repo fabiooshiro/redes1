@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  *
  */
 public class Animavel {
-	private int id;
+	private long id = -1l;
 	public float x;
 	public float y;
 	private float origemX;
@@ -61,10 +61,10 @@ public class Animavel {
 	public void setImagemPath(String imagemPath) {
 		this.imagemPath = imagemPath;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public BufferedImage getBufferedImage() {
