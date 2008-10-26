@@ -9,18 +9,18 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 	private Transmissor transmissor;
 	private long tempoMs;
 	private TimeOut timeOut;
-	public TimeOut(Transmissor transmissor,final long tempoMs) throws Exception{
+	public TimeOut(Transmissor transmissor,final long tempoMs,int numero) throws Exception{
 		this.transmissor = transmissor;
 		this.tempoMs = tempoMs;
 		timeOut = this;
-		this.setImagemPath("images/clockp.png");
-		this.setDestinoY(MainFrame.Y_TRANSMISSOR);
+		this.setNumero(numero);
 		
+		this.setDestinoY(MainFrame.Y_TRANSMISSOR - 20);
 		int tQ = (int)tempoMs/(1000/animador.getFps());
 		int tX = tQ*animador.getVelocidadeHistorico();
 		this.setOrigemX(MainFrame.X_TRANSMISSOR+tX);
 		this.setDestinoX(MainFrame.X_TRANSMISSOR+tX-animador.getVelocidadeHistorico());
-		this.setOrigemY(MainFrame.Y_TRANSMISSOR);
+		this.setOrigemY(MainFrame.Y_TRANSMISSOR - 20);
 		this.setFrameInicio(animador.getCurrentFrame());
 		this.setFrameFinal(animador.getCurrentFrame()+1);
 		animador.animar(this);
@@ -44,6 +44,7 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 	}
 
 	public void setNumero(int numero) {
+		this.setImagemPath("images/clockp"+numero+".png");
 		this.numero = numero;
 	}
 	public static void setAnimador(Animador animador) {
