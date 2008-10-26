@@ -97,7 +97,7 @@ public class PanelControle extends JPanel{
 		panelTop.add(btnTrocaImagem);
 		this.add(panelTop,BorderLayout.NORTH);
 		this.add(panelCenter,BorderLayout.CENTER);
-		this.setPreferredSize(new Dimension(800,330));
+		//this.setPreferredSize(new Dimension(800,330));
 	}
 	private void enviar(){
 		try{

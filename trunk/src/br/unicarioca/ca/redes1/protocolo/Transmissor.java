@@ -7,7 +7,7 @@ import br.unicarioca.ca.redes1.vo.Nack;
 import br.unicarioca.ca.redes1.vo.Quadro;
 /**
  * Transmissor com buffer
- * @author fabio
+ * @author Fabio Issamu Oshiro
  *
  */
 public class Transmissor implements InterfaceTransmissor {
@@ -18,6 +18,7 @@ public class Transmissor implements InterfaceTransmissor {
 	ArrayList<Quadro> buffer = new ArrayList<Quadro>();
 	int quadroAtual = 0;
 	boolean servicoIniciado = false;
+	int maximoQuadrosCirculando = 4;
 	int quantidadeCirculando = 0;
 	/**
 	 * Numera os quadros de 0 até X
@@ -76,7 +77,7 @@ public class Transmissor implements InterfaceTransmissor {
 				while(true){
 					try{
 						System.out.println("quantidadeCirculando = " + quantidadeCirculando);
-						if(buffer.size()>0 && quantidadeCirculando<2 && quadroAtual<buffer.size()){
+						if(buffer.size()>0 && quantidadeCirculando<maximoQuadrosCirculando && quadroAtual<buffer.size()){
 							Quadro quadro = buffer.get(quadroAtual++);
 							camadaFisica.enviarQuadro(quadro);
 							new TimeOut(transmissor,camadaFisica.getVelocidadeCanal()*2+camadaFisica.getVelocidadeCanal()/3,quadro.getNumero());
