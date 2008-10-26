@@ -19,6 +19,10 @@ public class Transmissor implements InterfaceTransmissor {
 	int quadroAtual = 0;
 	boolean servicoIniciado = false;
 	int quantidadeCirculando = 0;
+	/**
+	 * Numera os quadros de 0 até X
+	 */
+	int totalNumeros = 8;
 	public void receberAck(Ack ack) {
 		System.out.println("Transmissor recebendo ack "+ack.getNumero());
 		timeoutvalido[ack.getNumero()] = false;
@@ -56,7 +60,7 @@ public class Transmissor implements InterfaceTransmissor {
 	public void enviarQuadros(final int qtd) throws Exception {
 		for (int i = 0; i < qtd; i++) {
 			Quadro quadro = new Quadro();
-			quadro.setNumero(i%8);
+			quadro.setNumero(i%totalNumeros);
 			buffer.add(quadro);
 		}
 		servico();
@@ -93,5 +97,15 @@ public class Transmissor implements InterfaceTransmissor {
 			}
 		};
 		t.start();
+	}
+
+	public void enviarMensagem(String mensagem) throws Exception {
+		for(int i=0;i<mensagem.length();i++){
+			Quadro quadro = new Quadro();
+			quadro.setNumero(i%totalNumeros);
+			quadro.setDado(mensagem.charAt(i)+"");
+			buffer.add(quadro);
+		}
+		servico();
 	}
 }
