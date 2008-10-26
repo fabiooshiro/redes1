@@ -221,4 +221,11 @@ public class MainFrame extends JFrame{
 	public static Animador getAnimador() {
 		return animador;
 	}
+	public void enviarMensagem(String mensagem) {
+		try{
+			transmissor.enviarMensagem(mensagem);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }

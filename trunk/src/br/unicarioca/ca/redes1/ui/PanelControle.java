@@ -107,7 +107,8 @@ public class PanelControle extends JPanel{
 			int tempo = Integer.valueOf(txtTempo.getText());
 			int taxaErro = Integer.valueOf(txtTaxaPerdaQuadro.getText());
 			int taxaErroAck = Integer.valueOf(txtTaxaPerdaAck.getText());
-			this.mainFrame.enviarQuadros(qtd);
+			this.mainFrame.enviarMensagem("Olá mundo!");
+			//this.mainFrame.enviarQuadros(qtd);
 			//this.mainFrame.enviarPacote(qtd, tempo, intervalo, ackDelay,taxaErro,taxaErroAck);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
