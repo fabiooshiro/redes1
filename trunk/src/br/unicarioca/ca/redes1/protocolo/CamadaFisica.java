@@ -14,7 +14,7 @@ import br.unicarioca.ca.redes1.vo.Quadro;
 public class CamadaFisica implements FimAnimacaoListener{
 	private static Animador animador;
 	private static CamadaFisica instance;
-	private long velocidadeCanal = 2000;
+	private long velocidadeCanal = 3000;
 	private Transmissor transmissor;
 	private Receptor receptor;
 	private static long autoIncAnimacao=0;

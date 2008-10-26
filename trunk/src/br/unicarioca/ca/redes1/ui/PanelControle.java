@@ -40,7 +40,7 @@ public class PanelControle extends JPanel{
 		btnEnviarPacote=new JButton("Enviar");
 		btnTrocaImagem= new JButton("Trocar");
 		txtTempo = new JTextField("45");
-		txtQtd = new JTextField("3");
+		txtQtd = new JTextField("5");
 		txtIntervalo = new JTextField("20");
 		txtAckDelay = new JTextField("5");
 		txtTaxaPerdaAck = new JTextField("0");
