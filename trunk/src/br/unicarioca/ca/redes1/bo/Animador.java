@@ -29,12 +29,12 @@ public class Animador {
 	private boolean mostrarHistorico;
 	public Animador(Tela tela) throws Exception {
 		listMovie = new ArrayList<Movie>();
-		bufferedImage = new BufferedImage(width,420,BufferedImage.TYPE_INT_ARGB);
-		//historico = new BufferedImage(width,600,BufferedImage.TYPE_INT_ARGB);
+		
 		hist[0]=ImageIO.read(new File("images/hist.png"));
-		hist[1]=ImageIO.read(new File("images/hist.png"));//new BufferedImage(width,600,BufferedImage.TYPE_INT_ARGB);
+		hist[1]=ImageIO.read(new File("images/hist.png"));
 		fundo = ImageIO.read(new File("images/fundo.png"));
-		//historico = new BufferedImage(550,1680,BufferedImage.TYPE_INT_ARGB);
+		int height = fundo.getHeight();
+		bufferedImage = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		this.tela = tela;
 		timer = new Timer(this);
 		timer.start();

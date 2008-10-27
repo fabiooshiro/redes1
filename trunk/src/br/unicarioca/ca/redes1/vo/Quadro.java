@@ -3,6 +3,7 @@ package br.unicarioca.ca.redes1.vo;
 public class Quadro extends Animavel{
 	private int numero;
 	private String dado;
+	private String cabecalho;
 	public Quadro(){
 		setImagemPath("images/pacote.png");
 	}
@@ -19,6 +20,12 @@ public class Quadro extends Animavel{
 	}
 	public void setDado(String dado) {
 		this.dado = dado;
+	}
+	public String getCabecalho() {
+		return cabecalho;
+	}
+	public void setCabecalho(String cabecalho) {
+		this.cabecalho = cabecalho;
 	}
 	
 }
