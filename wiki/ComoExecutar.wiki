@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+
+= Como Executar =
+
+Para executar ou ver o programa é necessário a JVM 1.5 ou posterior.
+http://java.com/en/download/manual.jsp
+
+
+== Problemas ==
+
+Caso não consiga abrir.
+  * Abra um terminal ou prompt de comando
+  * digite cd Desktop
+  * digite java -jar redes1.v3.jar
