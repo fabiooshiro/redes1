@@ -1,5 +1,4 @@
-#summary One-sentence summary of this page.
-
+#summary Instruções para visualizar a aplicação
 = Como Executar =
 
 Para executar ou ver o programa é necessário a JVM 1.5 ou posterior.
