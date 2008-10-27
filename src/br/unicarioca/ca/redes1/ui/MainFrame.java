@@ -41,28 +41,33 @@ public class MainFrame extends JFrame{
 	private Transmissor transmissor;
 	private Receptor receptor;
 	public MainFrame() throws Exception{
-		super("Transmissão");
-		panelAnimacao = new PanelAnimacao();
-		JScrollPane sp = new JScrollPane(panelAnimacao); 
-		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		panelControle = new PanelControle(this);
-		splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,sp,panelControle);
-		splitPane.setDividerLocation(300);
-		splitPane.setOneTouchExpandable(true);
-
-		add(splitPane,BorderLayout.CENTER);
-		//add(panelControle,BorderLayout.SOUTH);
-		animador = new Animador(panelAnimacao);
-		CamadaFisica.setAnimador(animador);
-		transmissor = new Transmissor();
-		receptor = new Receptor();
-		CamadaFisica camadaFisica = CamadaFisica.getInstance();
-		camadaFisica.setReceptor(receptor);
-		camadaFisica.setTransmissor(transmissor);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setPreferredSize(new Dimension(800,600));
-		this.pack();
-		this.setVisible(true);
+		
+		super("Redes 1");
+		{//iniciar parte lógica
+			panelAnimacao = new PanelAnimacao();
+			animador = new Animador(panelAnimacao);
+			CamadaFisica.setAnimador(animador);
+			transmissor = new Transmissor();
+			receptor = new Receptor();
+			CamadaFisica camadaFisica = CamadaFisica.getInstance();
+			camadaFisica.setReceptor(receptor);
+			camadaFisica.setTransmissor(transmissor);
+		}
+		{//Iniciar parte gráfica
+			
+			JScrollPane sp = new JScrollPane(panelAnimacao); 
+			sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			panelControle = new PanelControle(this);
+			splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,sp,panelControle);
+			splitPane.setDividerLocation(300);
+			splitPane.setOneTouchExpandable(true);
+			add(splitPane,BorderLayout.CENTER);	
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setPreferredSize(new Dimension(800,600));
+			this.pack();
+			this.setVisible(true);
+		}
+		this.mostrarHistorico(true);
 	}
 	public void enviarQuadros(int qtd){
 		try{
@@ -116,5 +121,8 @@ public class MainFrame extends JFrame{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	public Transmissor getTransmissor() {
+		return transmissor;		
 	}
 }

@@ -20,8 +20,8 @@ public class CamadaFisica implements FimAnimacaoListener{
 	private static long autoIncAnimacao=0;
 	private HashMap<Long,Quadro> quadrosCirculando = new HashMap<Long,Quadro>();
 	private HashMap<Long,Ack> acksCirculando = new HashMap<Long,Ack>();
-	private int taxaErro = 30;
-	private int taxaErroAck = 30;
+	private int taxaErro = 0;
+	private int taxaErroAck = 0;
 	private CamadaFisica(){
 		instance = this;
 		animador.addFimAnimacaoListener(this);
@@ -152,6 +152,18 @@ public class CamadaFisica implements FimAnimacaoListener{
 	}
 	public void setVelocidadeCanal(long velocidadeCanal) {
 		this.velocidadeCanal = velocidadeCanal;
+	}
+	public int getTaxaErro() {
+		return taxaErro;
+	}
+	public void setTaxaErro(int taxaErro) {
+		this.taxaErro = taxaErro;
+	}
+	public int getTaxaErroAck() {
+		return taxaErroAck;
+	}
+	public void setTaxaErroAck(int taxaErroAck) {
+		this.taxaErroAck = taxaErroAck;
 	}
 	
 }

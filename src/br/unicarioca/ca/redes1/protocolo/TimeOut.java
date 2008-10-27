@@ -9,12 +9,13 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 	private Transmissor transmissor;
 	private long tempoMs;
 	private TimeOut timeOut;
+	private boolean valido;
 	public TimeOut(Transmissor transmissor,final long tempoMs,int numero) throws Exception{
+		valido = true;
 		this.transmissor = transmissor;
 		this.tempoMs = tempoMs;
 		timeOut = this;
 		this.setNumero(numero);
-		
 		this.setDestinoY(MainFrame.Y_TRANSMISSOR - 20);
 		int tQ = (int)tempoMs/(1000/animador.getFps());
 		int tX = tQ*animador.getVelocidadeHistorico();
@@ -49,6 +50,12 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 	}
 	public static void setAnimador(Animador animador) {
 		TimeOut.animador = animador;		
+	}
+	public boolean isValido() {
+		return valido;
+	}
+	public void setValido(boolean valido) {
+		this.valido = valido;
 	}
 	
 }
