@@ -96,11 +96,7 @@ public class PanelControle extends JPanel{
 				enviar();	
 			}			
 		});
-		btnTrocaImagem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				trocarImagem();	
-			}
-		});
+		
 		Dimension txtDimension = new Dimension(35,26);
 		txtIntervalo.setPreferredSize(txtDimension);
 		txtAckDelay.setPreferredSize(txtDimension);
@@ -211,7 +207,5 @@ public class PanelControle extends JPanel{
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
 	}
-	private void trocarImagem(){
-		MainFrame.getAnimador().trocarImagemByIdMovie(2L,"images/pacote.jpg");
-	}
+	
 }
