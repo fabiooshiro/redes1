@@ -1,7 +1,9 @@
 package br.unicarioca.ca.redes1.protocolo;
-
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
+import br.unicarioca.ca.redes1.bo.ImageIO;
 import br.unicarioca.ca.redes1.vo.Ack;
 import br.unicarioca.ca.redes1.vo.Nack;
 import br.unicarioca.ca.redes1.vo.Quadro;
@@ -11,6 +13,7 @@ import br.unicarioca.ca.redes1.vo.Quadro;
  *
  */
 public class Transmissor implements InterfaceTransmissor {
+	private OutPut output;
 	private CamadaFisica camadaFisica = CamadaFisica.getInstance();
 	private long intervaloEntreQuadros = 1000;
 	boolean timeoutvalido[] = new boolean[80];
@@ -31,7 +34,7 @@ public class Transmissor implements InterfaceTransmissor {
 	
 	
 	public void receberAck(Ack ack) {
-		System.out.println("Transmissor recebendo ack "+ack.getNumero());
+		output.println("Transmissor recebendo ack "+ack.getNumero());
 		if(timeoutvalido[ack.getNumero()]){
 			timeoutvalido[ack.getNumero()] = false;
 			quantidadeCirculando--;
@@ -47,7 +50,7 @@ public class Transmissor implements InterfaceTransmissor {
 	}
 
 	public void receberTimeOut(TimeOut timeOut) {
-		System.out.println("Recebendo TimeOut "+timeOut.getNumero());
+		output.println("Recebendo TimeOut "+timeOut.getNumero());
 		if(timeoutvalido[timeOut.getNumero()]){
 			timeoutvalido[timeOut.getNumero()] = false;
 			quantidadeCirculando--;
@@ -80,15 +83,15 @@ public class Transmissor implements InterfaceTransmissor {
 	public synchronized void servico(){
 		if(servicoIniciado) return;
 		servicoIniciado = true;
-		System.out.println("Serviço iniciado");
+		output.println("Serviço iniciado");
 		final Transmissor transmissor = this;
 		Thread t = new Thread(){
 			public void run(){
 				while(true){
 					try{
-						System.out.println("\tquantidadeCirculando = " + quantidadeCirculando);
-						System.out.println("\tbuffer.size() = " + buffer.size());
-						System.out.println("\tquadroAtual = " + quadroAtual);
+						//output.println("\tquantidadeCirculando = " + quantidadeCirculando);
+						//output.println("\tbuffer.size() = " + buffer.size());
+						//output.println("\tquadroAtual = " + quadroAtual);
 						if(buffer.size()>0 && quantidadeCirculando<maximoQuadrosCirculando && quadroAtual<buffer.size()){
 							Quadro quadro = buffer.get(quadroAtual++);
 							camadaFisica.enviarQuadro(quadro);
@@ -98,7 +101,7 @@ public class Transmissor implements InterfaceTransmissor {
 						}else{
 							if(buffer.size()==0){
 								servicoIniciado = false;
-								System.out.println("Serviço parado");
+								output.println("Serviço parado");
 								System.out.println("quantidadeCirculando = " + quantidadeCirculando);
 								//zerar
 								quantidadeCirculando = 0;
@@ -166,7 +169,24 @@ public class Transmissor implements InterfaceTransmissor {
 	}
 
 
-	public void setTotalNumeros(int totalNumeros) {
+	public void setTotalNumeros(int totalNumeros) throws Exception {
+		//verificar se existem
+		for(int i=0;i<totalNumeros;i++){
+			BufferedImage img = ImageIO.read(new File("images/pacote"+i+".png"));
+			if(img == null){
+				throw new Exception("O número para pacotes vai até "+(i-1)+".");
+			}
+		}
 		this.totalNumeros = totalNumeros;
+	}
+
+
+	public OutPut getOutput() {
+		return output;
+	}
+
+
+	public void setOutput(OutPut output) {
+		this.output = output;
 	}
 }

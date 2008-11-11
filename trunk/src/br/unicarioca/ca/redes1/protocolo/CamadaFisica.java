@@ -6,6 +6,7 @@ import java.util.Random;
 import br.unicarioca.ca.redes1.bo.Animador;
 import br.unicarioca.ca.redes1.bo.FimAnimacaoListener;
 import br.unicarioca.ca.redes1.ui.MainFrame;
+
 import br.unicarioca.ca.redes1.vo.Ack;
 import br.unicarioca.ca.redes1.vo.Animavel;
 import br.unicarioca.ca.redes1.vo.Nack;
@@ -22,6 +23,7 @@ public class CamadaFisica implements FimAnimacaoListener{
 	private HashMap<Long,Ack> acksCirculando = new HashMap<Long,Ack>();
 	private int taxaErro = 0;
 	private int taxaErroAck = 0;
+	private OutPut output;
 	private CamadaFisica(){
 		instance = this;
 		animador.addFimAnimacaoListener(this);
@@ -68,7 +70,7 @@ public class CamadaFisica implements FimAnimacaoListener{
 	 * @param quadro
 	 */
 	public void enviarQuadro(Quadro quadro) throws Exception{
-		System.out.println("Camada Física enviando quadro "+ quadro.getNumero());
+		output.println("Camada Física enviando quadro "+ quadro.getNumero());
 		quadro.setId(autoIncAnimacao++);
 		quadro.setOrigemX(MainFrame.X_TRANSMISSOR-5);
 		quadro.setOrigemY(MainFrame.Y_TRANSMISSOR);
@@ -164,6 +166,12 @@ public class CamadaFisica implements FimAnimacaoListener{
 	}
 	public void setTaxaErroAck(int taxaErroAck) {
 		this.taxaErroAck = taxaErroAck;
+	}
+	public OutPut getOutput() {
+		return output;
+	}
+	public void setOutput(OutPut output) {
+		this.output = output;
 	}
 	
 }
