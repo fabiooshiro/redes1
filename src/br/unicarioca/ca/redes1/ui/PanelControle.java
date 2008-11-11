@@ -1,6 +1,5 @@
 package br.unicarioca.ca.redes1.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,12 +12,15 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import br.unicarioca.ca.redes1.protocolo.CamadaFisica;
+import br.unicarioca.ca.redes1.protocolo.OutPut;
 
-public class PanelControle extends JPanel{
+public class PanelControle extends JPanel implements OutPut{
 	private static final long serialVersionUID = -1907642558005285055L;
 	MainFrame mainFrame;
 	JButton btnEnviarPacote;
@@ -47,7 +49,8 @@ public class PanelControle extends JPanel{
 	JPanel panelTransmissor = new JPanel();
 	JPanel panelCenter = new JPanel();
 	JPanel panelCamadaFisica = new JPanel();
-	
+	JPanel panelOutPut = new JPanel();
+	JTextArea textAreaOutPut = new JTextArea();
 	public PanelControle(final MainFrame mainFrame) {
 		this.mainFrame=mainFrame;
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -175,16 +178,25 @@ public class PanelControle extends JPanel{
 		
 		panelTransmissor.add(new JLabel());
 		panelTransmissor.add(btnEnviarPacote);
+		
+		
+		panelOutPut.setLayout(new GridLayout(0,1));
+		panelOutPut.add(new JScrollPane(textAreaOutPut));
+		
 		//panelTransmissor.setPreferredSize(new Dimension(400,100));
 		//panelTop.add(btnTrocaImagem);
 		JPanel pT = new JPanel();
 		pT.add(panelTransmissor);
 		tabbedPane.addTab("Transmissor Receptor", pT);
 		tabbedPane.addTab("Camada Física", panelCamadaFisica);
-		
+		tabbedPane.addTab("Output", panelOutPut);
 		//this.add(panelTop,BorderLayout.NORTH);
 		this.setLayout(new GridLayout(1,1));
 		this.add(tabbedPane);
+		
+		this.mainFrame.getTransmissor().setOutput(this);
+		this.mainFrame.getReceptor().setOutput(this);
+		CamadaFisica.getInstance().setOutput(this);
 		//this.setPreferredSize(new Dimension(800,330));
 	}
 	private void enviar(){
@@ -195,17 +207,21 @@ public class PanelControle extends JPanel{
 			int totalNumeros = (int)Math.pow(2, Integer.valueOf(txtBitsNumero.getText()));
 			System.out.println("totalNumeros = " + totalNumeros);
 			int maximoQuadrosCirculando = Integer.valueOf(txtMaxQuadroCirculando.getText());
-			//this.mainFrame.enviarMensagem("Olá mundo!");
-			this.mainFrame.enviarQuadros(qtd);
-			
+
 			this.mainFrame.getTransmissor().setTotalNumeros(totalNumeros);
 			this.mainFrame.getTransmissor().setMaximoQuadrosCirculando(maximoQuadrosCirculando);
 			this.mainFrame.getTransmissor().setTempoTimeOut(tempoTimeOut);
 			this.mainFrame.getTransmissor().setIntervaloEntreQuadros(intervalo);
-			
+			this.mainFrame.enviarMensagem("Olá mundo!");
+			//this.mainFrame.enviarQuadros(qtd);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
+	}
+	public synchronized void println(String arg) {
+		textAreaOutPut.append(arg+"\n");
+		textAreaOutPut.setCaretPosition(textAreaOutPut.getText().length());
+		//textAreaOutPut.setText(textAreaOutPut.getText());
 	}
 	
 }

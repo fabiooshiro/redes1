@@ -125,4 +125,7 @@ public class MainFrame extends JFrame{
 	public Transmissor getTransmissor() {
 		return transmissor;		
 	}
+	public Receptor getReceptor() {
+		return receptor;
+	}
 }

@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
  */
 public class ImageIO {
 	static ImageIO imgIo = new ImageIO();
-	static BufferedImage read(File arq) {
+	public static BufferedImage read(File arq) {
 		String imgName = arq.getPath();
 		try{
 			BufferedImage retorno = null;
