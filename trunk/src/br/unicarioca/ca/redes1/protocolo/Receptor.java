@@ -20,6 +20,7 @@ public class Receptor {
 		
 		if(estado.equals(ESTADO_AGUARDANDO) && quadro.getCabecalho()!=null && quadro.getCabecalho().equals("ini")){
 			sequencial = quadro.getNumero();
+			mensagemRecebida="";
 			estado = ESTADO_RECEBENDO;
 		}
 		
