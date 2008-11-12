@@ -205,15 +205,15 @@ public class PanelControle extends JPanel implements OutPut{
 			long intervalo = Long.valueOf(txtIntervalo.getText());
 			int qtd = Integer.valueOf(txtQtd.getText());
 			int totalNumeros = (int)Math.pow(2, Integer.valueOf(txtBitsNumero.getText()));
-			System.out.println("totalNumeros = " + totalNumeros);
+			//System.out.println("totalNumeros = " + totalNumeros);
 			int maximoQuadrosCirculando = Integer.valueOf(txtMaxQuadroCirculando.getText());
 
 			this.mainFrame.getTransmissor().setTotalNumeros(totalNumeros);
 			this.mainFrame.getTransmissor().setMaximoQuadrosCirculando(maximoQuadrosCirculando);
 			this.mainFrame.getTransmissor().setTempoTimeOut(tempoTimeOut);
 			this.mainFrame.getTransmissor().setIntervaloEntreQuadros(intervalo);
-			this.mainFrame.enviarMensagem("Olá mundo!");
-			//this.mainFrame.enviarQuadros(qtd);
+			//this.mainFrame.enviarMensagem("Olá mundo!");
+			this.mainFrame.enviarQuadros(qtd);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
