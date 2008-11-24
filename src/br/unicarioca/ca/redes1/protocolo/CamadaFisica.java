@@ -1,16 +1,20 @@
 package br.unicarioca.ca.redes1.protocolo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import br.unicarioca.ca.redes1.bo.Animador;
 import br.unicarioca.ca.redes1.bo.FimAnimacaoListener;
+import br.unicarioca.ca.redes1.bo.FrameAction;
 import br.unicarioca.ca.redes1.ui.MainFrame;
 
 import br.unicarioca.ca.redes1.vo.Ack;
 import br.unicarioca.ca.redes1.vo.Animavel;
 import br.unicarioca.ca.redes1.vo.Nack;
 import br.unicarioca.ca.redes1.vo.Quadro;
+import br.unicarioca.ca.redes1.vo.Raio;
 
 public class CamadaFisica implements FimAnimacaoListener{
 	private static Animador animador;
@@ -173,5 +177,48 @@ public class CamadaFisica implements FimAnimacaoListener{
 	public void setOutput(OutPut output) {
 		this.output = output;
 	}
-	
+	public void interferir() throws Exception{
+		Raio raio = new Raio();
+		Raio raio2 = new Raio();
+		
+		raio.setOrigemY(MainFrame.Y_TRANSMISSOR);
+		raio.setDestinoY(MainFrame.Y_RECEPTOR);
+		raio2.setOrigemY(MainFrame.Y_TRANSMISSOR);
+		raio2.setDestinoY(MainFrame.Y_RECEPTOR);
+		
+		raio2.setDestinoX(200);
+		raio2.setOrigemX(580);
+		raio.setDestinoX(100);
+		raio.setOrigemX(480);
+		
+		raio2.setFrameInicio(animador.getCurrentFrame());
+		raio2.setFrameFinal(animador.getCurrentFrame()+10);
+		raio.setFrameInicio(animador.getCurrentFrame()+4);
+		raio.setFrameFinal(animador.getCurrentFrame()+14);
+		animador.animar(raio, false);
+		animador.animar(raio2, false);
+		animador.addFrameAction(new FrameAction(animador.getCurrentFrame()+5){
+			@Override
+			public void executar() {
+				Set<Long> keys = quadrosCirculando.keySet();
+				for(Long k:keys){
+					Quadro q = quadrosCirculando.get(k);
+					if(q!=null && q.y<MainFrame.Y_RECEPTOR-10){
+						animador.trocarImagemByIdAnimavel((int)q.getId(), "images/puff.png");
+						q.setFrameFinal(getFrame());
+						q.setDestinoY(q.y);
+					}
+				}
+				keys = acksCirculando.keySet();
+				for(Long k:keys){
+					Ack ack = acksCirculando.get(k);
+					if(ack!=null && ack.y>MainFrame.Y_TRANSMISSOR+10){
+						animador.trocarImagemByIdAnimavel((int)ack.getId(), "images/puffack.png");
+						ack.setFrameFinal(getFrame());
+						ack.setDestinoY(ack.y);
+					}
+				}
+			}
+		});
+	}
 }
