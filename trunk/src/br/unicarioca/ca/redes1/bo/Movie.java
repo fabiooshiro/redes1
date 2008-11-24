@@ -10,8 +10,6 @@ import br.unicarioca.ca.redes1.vo.Animavel;
 public class Movie {
 	private static long ids = 0;
 	private long id;
-	float _y;
-	float _x;
 	float _xinc;
 	float _yinc;
 	int _height;
@@ -22,10 +20,10 @@ public class Movie {
 	public Movie(Animavel animavel){
 		this.animavel = animavel;
 		this.image = animavel.getBufferedImage();
-		_y = (int) animavel.getOrigemY();
+		animavel.y = animavel.getOrigemY();
 		_height = image.getHeight();
 		_width = image.getWidth();
-		_x = (int) animavel.getOrigemX();
+		animavel.x = animavel.getOrigemX();
 		long tx = animavel.getFrameFinal() - animavel.getFrameInicio();
 		_xinc = (animavel.getDestinoX() - animavel.getOrigemX()) / tx;
 		_yinc = (float) (animavel.getDestinoY() - animavel.getOrigemY()) / (float) tx;
@@ -40,8 +38,6 @@ public class Movie {
 		return id;
 	}
 	public Animavel getAnimavel() {
-		animavel.x=_x;
-		animavel.y=_y;
 		return animavel;
 	}
 }

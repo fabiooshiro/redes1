@@ -17,6 +17,7 @@ public class Animador {
 	private Timer timer;
 	private long frameCounter;
 	private ArrayList<Movie> listMovie;
+	private ArrayList<FrameAction> frameActions = new ArrayList<FrameAction>();
 	private BufferedImage bufferedImage;
 	private ArrayList<FimAnimacaoListener> listFimAnimacaoListener = new ArrayList<FimAnimacaoListener>();
 	private BufferedImage hist[]=new BufferedImage[2];
@@ -45,7 +46,17 @@ public class Animador {
 	 * Qualquer semelhança com o Flash é mera coincidência
 	 */
 	private void onEnterFrame() throws Exception{
-		
+		ArrayList<FrameAction> remover = new ArrayList<FrameAction>();
+		for(FrameAction fa: frameActions){
+			if(fa.getFrame()==(frameCounter)){
+				fa.executar();
+				remover.add(fa);
+				
+			}
+		}
+		for(FrameAction fa: remover){
+			frameActions.remove(fa);
+		}
 	}
 	
 	/**
@@ -69,19 +80,21 @@ public class Animador {
 			for(int i=0;i<tot;i++){
 				Movie mc = listMovie.get(i);
 				if(mc.animavel.getFrameInicio()>=frameCounter) continue;
-				mc._x+=mc._xinc;
-				mc._y+=mc._yinc;
+				mc.animavel.x+=mc._xinc;
+				mc.animavel.y+=mc._yinc;
 				if(mc.animavel.getFrameFinal()<frameCounter){
 					if(mc.logar){
-						drawImage(hgr,mc,(int)mc._x-hx,(int)mc.animavel.getDestinoY(),Color.WHITE);
-						drawImage(hgrb,mc,(int)mc._x-hx-800,(int)mc.animavel.getDestinoY(),Color.WHITE);
+						drawImage(hgr,mc,(int)mc.animavel.x-hx,(int)mc.animavel.getDestinoY(),Color.WHITE);
+						drawImage(hgrb,mc,(int)mc.animavel.x-hx-800,(int)mc.animavel.getDestinoY(),Color.WHITE);
 					}
 					retirar.add(mc);
 				}else{
-					drawImage(graphics,mc,(int)mc._x,(int)mc._y);
+					drawImage(graphics,mc,(int)mc.animavel.x,(int)mc.animavel.y);
 					//marca a linha do historico
-					drawPoint(hgr,(int)mc._x-hx+mc._width/2,(int)(mc._y+mc._height/2));
-					drawPoint(hgrb,(int)mc._x-hx-800+mc._width/2,(int)(mc._y+mc._height/2));
+					if(mc.logar){
+						drawPoint(hgr,(int)mc.animavel.x-hx+mc._width/2,(int)(mc.animavel.y+mc._height/2));
+						drawPoint(hgrb,(int)mc.animavel.x-hx-800+mc._width/2,(int)(mc.animavel.y+mc._height/2));
+					}
 				}
 			}
 			for (Movie movie : retirar) {
@@ -181,5 +194,7 @@ public class Animador {
 		return timer.getFps();
 	}
 
-	
+	public void addFrameAction(FrameAction frameAction) {
+		frameActions.add(frameAction);
+	}	
 }
