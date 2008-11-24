@@ -1,7 +1,6 @@
 package br.unicarioca.ca.redes1.protocolo;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -9,7 +8,6 @@ import br.unicarioca.ca.redes1.bo.Animador;
 import br.unicarioca.ca.redes1.bo.FimAnimacaoListener;
 import br.unicarioca.ca.redes1.bo.FrameAction;
 import br.unicarioca.ca.redes1.ui.MainFrame;
-
 import br.unicarioca.ca.redes1.vo.Ack;
 import br.unicarioca.ca.redes1.vo.Animavel;
 import br.unicarioca.ca.redes1.vo.Nack;

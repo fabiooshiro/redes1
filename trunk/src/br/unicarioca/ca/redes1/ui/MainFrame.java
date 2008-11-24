@@ -2,23 +2,16 @@ package br.unicarioca.ca.redes1.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-
 import br.unicarioca.ca.redes1.bo.Animador;
 import br.unicarioca.ca.redes1.protocolo.CamadaFisica;
-import br.unicarioca.ca.redes1.protocolo.InterfaceTransmissor;
 import br.unicarioca.ca.redes1.protocolo.Receptor;
 import br.unicarioca.ca.redes1.protocolo.Transmissor;
-import br.unicarioca.ca.redes1.vo.Ack;
-import br.unicarioca.ca.redes1.vo.Animavel;
-import br.unicarioca.ca.redes1.vo.Quadro;
-import br.unicarioca.ca.redes1.vo.TimeOut;
 
 /**
  * Só por trocadilho
