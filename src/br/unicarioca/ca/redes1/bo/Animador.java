@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 import br.unicarioca.ca.redes1.vo.Animavel;
 
@@ -28,6 +29,7 @@ public class Animador {
 	private Tela tela;
 	private int velocidadeHistorico;
 	private boolean mostrarHistorico;
+	private boolean pausado = false;
 	public Animador(Tela tela) throws Exception {
 		listMovie = new ArrayList<Movie>();
 		
@@ -64,6 +66,10 @@ public class Animador {
 	 */
 	synchronized void timeOut(){
 		try{
+			if(pausado){
+				//esta pausado sai da funcao
+				return;
+			}
 			frameCounter++;
 			onEnterFrame();
 			Graphics graphics = bufferedImage.getGraphics();
@@ -196,5 +202,44 @@ public class Animador {
 
 	public void addFrameAction(FrameAction frameAction) {
 		frameActions.add(frameAction);
-	}	
+	}
+
+	private long tempoDiff = 0;
+	private Long dateStop;
+	public void stop() {
+		dateStop = new Date().getTime();
+		pausado = true;
+	}
+	
+	public void play(){
+		if(dateStop!=null){
+			tempoDiff = new Date().getTime() - dateStop;
+			dateStop=null;
+		}
+		pausado = false;
+	}
+
+	/**
+	 * Igual a Thread.sleep()
+	 * @param intervalo tempo em ms
+	 */
+	public void sleep(long intervalo) {
+		long dataStop = new Date().getTime()+intervalo;
+		while(dataStop>new Date().getTime()){
+			while(pausado){
+				try{
+					Thread.sleep(10);
+				}catch(Exception e){
+					
+				}
+			}
+			dataStop+=tempoDiff;
+			tempoDiff = 0;
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){
+				
+			}
+		}
+	}
 }
