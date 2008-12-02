@@ -9,6 +9,7 @@ public class Receptor {
 	private OutPut output;
 	CamadaFisica camadaFisica = CamadaFisica.getInstance();
 	private int sequencial = 0;
+	int totalNumeros = 8;
 	private String quadrosRecebidos = "";
 	private String mensagemRecebida = "";
 	private static final String ESTADO_AGUARDANDO = "Aguardando novas";
@@ -28,7 +29,7 @@ public class Receptor {
 		
 		if(sequencial == quadro.getNumero() && estado.equals(ESTADO_RECEBENDO)){
 			sequencial++;
-			sequencial=sequencial%8;
+			sequencial=sequencial%totalNumeros;
 			quadrosRecebidos+=quadro.getNumero() + ", ";
 			mensagemRecebida+=quadro.getDado();
 			Ack ack = new Ack();
@@ -38,7 +39,7 @@ public class Receptor {
 			}
 			camadaFisica.enviarAck(ack);
 		}else{
-			//System.out.println("Receptor aguardando "+sequencial);
+			output.println("\tReceptor aguardando "+sequencial);
 			Ack ack = new Ack();
 			ack.setNumero(quadro.getNumero());
 			camadaFisica.enviarAck(ack);
@@ -62,5 +63,8 @@ public class Receptor {
 	}
 	public void setTela(Tela tela) {
 		this.tela = tela;
+	}
+	public void setTotalNumeros(int totalNumeros) {
+		this.totalNumeros = totalNumeros;
 	}
 }
