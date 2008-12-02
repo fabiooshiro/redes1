@@ -34,26 +34,24 @@ public class MainFrame extends JFrame{
 	private Transmissor transmissor;
 	private Receptor receptor;
 	public MainFrame() throws Exception{
-		
 		super("Redes 1");
 		{//iniciar parte lógica
-			panelAnimacao = new PanelAnimacao();
+			panelAnimacao = new PanelAnimacao(this);
 			animador = new Animador(panelAnimacao);
 			CamadaFisica.setAnimador(animador);
 			transmissor = new Transmissor();
-			
 			receptor = new Receptor();
+			receptor.setTela(panelAnimacao);
 			CamadaFisica camadaFisica = CamadaFisica.getInstance();
 			camadaFisica.setReceptor(receptor);
 			camadaFisica.setTransmissor(transmissor);
 		}
 		{//Iniciar parte gráfica
-			
 			JScrollPane sp = new JScrollPane(panelAnimacao); 
 			sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			panelControle = new PanelControle(this);
 			splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,sp,panelControle);
-			splitPane.setDividerLocation(300);
+			splitPane.setDividerLocation(315);
 			splitPane.setOneTouchExpandable(true);
 			add(splitPane,BorderLayout.CENTER);	
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,5 +119,15 @@ public class MainFrame extends JFrame{
 	}
 	public Receptor getReceptor() {
 		return receptor;
+	}
+	/**
+	 * Envia a mensagem que esta no painel de animacao
+	 */
+	public void enviarMensagem() {
+		try{
+			transmissor.enviarMensagem(panelAnimacao.getMensagemEnviada());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }

@@ -8,4 +8,5 @@ import java.awt.image.BufferedImage;
  */
 public interface Tela {
 	public void setBufferedImage(BufferedImage bi);
+	public void setMensagemRecebida(String mensagem);
 }
