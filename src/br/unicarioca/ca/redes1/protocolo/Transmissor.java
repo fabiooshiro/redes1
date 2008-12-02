@@ -91,11 +91,13 @@ public class Transmissor implements InterfaceTransmissor {
 				while(true){
 					try{
 						if(buffer.size()>0 && quantidadeCirculando<maximoQuadrosCirculando && quadroAtual<buffer.size()){
-							Quadro quadro = buffer.get(quadroAtual++);
-							camadaFisica.enviarQuadro(quadro);
-							new TimeOut(transmissor,tempoTimeOut,quadro.getNumero());
-							timeoutvalido[quadro.getNumero()]=true;
-							quantidadeCirculando++;
+							if(quadroAtual>=-1){
+								Quadro quadro = buffer.get(quadroAtual++);
+								camadaFisica.enviarQuadro(quadro);
+								new TimeOut(transmissor,tempoTimeOut,quadro.getNumero());
+								timeoutvalido[quadro.getNumero()]=true;
+								quantidadeCirculando++;
+							}
 						}else{
 							if(buffer.size()==0){
 								servicoIniciado = false;
