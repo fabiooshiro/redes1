@@ -56,7 +56,7 @@ public class PanelControle extends JPanel implements OutPut {
 	JTextArea textAreaOutPut = new JTextArea();
 
 	boolean pausado = false; 
-	
+	boolean stopAndWait = false;
 	public PanelControle(final MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -68,7 +68,11 @@ public class PanelControle extends JPanel implements OutPut {
 		btnPausa = new JButton("Pausar");
 		btnStopAndWait.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				setupStopAndWait();
+				if(!stopAndWait){
+					setupStopAndWait();
+				}else{
+					setupARQ();
+				}
 			}			
 		});
 		btnPausa.addActionListener(new ActionListener() {
@@ -218,11 +222,29 @@ public class PanelControle extends JPanel implements OutPut {
 		this.mainFrame.getTransmissor().setOutput(this);
 		this.mainFrame.getReceptor().setOutput(this);
 		CamadaFisica.getInstance().setOutput(this);
+		setupARQ();
+	}
+	/**
+	 * Configura para ARQ
+	 */
+	protected void setupARQ() {
+		btnStopAndWait.setText("Stop and Wait");
+		txtBitsNumero.setText("3");
+		txtTempoCamadaFisica.setText("3000");
+		txtQtd.setText("5");
+		txtIntervalo.setText("1000");
+		txtAckDelay.setText("5");
+		txtTaxaPerdaAck.setText("0");
+		txtTaxaPerdaQuadro.setText("0");
+		setupCamadaFisica();
+		setupTransmissor();
+		stopAndWait = false;
 	}
 	/**
 	 * Configura para stop and wait
 	 */
 	protected void setupStopAndWait() {
+		btnStopAndWait.setText("ARQ");
 		txtBitsNumero.setText("1");
 		txtIntervalo.setText("8000");
 		txtMaxQuadroCirculando.setText("1");
@@ -232,6 +254,7 @@ public class PanelControle extends JPanel implements OutPut {
 		txtTaxaPerdaQuadro.setText("0");
 		setupCamadaFisica();
 		setupTransmissor();
+		stopAndWait = true;
 	}
 	private void setupCamadaFisica(){
 		try {
