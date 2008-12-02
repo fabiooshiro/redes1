@@ -27,7 +27,7 @@ public class Transmissor implements InterfaceTransmissor {
 	 * Numera os quadros de 0 até X
 	 */
 	int totalNumeros = 8;
-	
+	Thread threadServico;
 	public Transmissor(){
 		tempoTimeOut = getDefaultTimeOut();
 	}
@@ -41,7 +41,8 @@ public class Transmissor implements InterfaceTransmissor {
 		}
 		if(buffer.size()>0 && buffer.get(0).getNumero()==ack.getNumero()){
 			buffer.remove(0);
-			quadroAtual--;
+			if(quadroAtual>=0)
+				quadroAtual--;
 		}
 	}
 
@@ -85,13 +86,10 @@ public class Transmissor implements InterfaceTransmissor {
 		servicoIniciado = true;
 		output.println("Serviço iniciado");
 		final Transmissor transmissor = this;
-		Thread t = new Thread(){
+		threadServico = new Thread(){
 			public void run(){
 				while(true){
 					try{
-						//output.println("\tquantidadeCirculando = " + quantidadeCirculando);
-						//output.println("\tbuffer.size() = " + buffer.size());
-						//output.println("\tquadroAtual = " + quadroAtual);
 						if(buffer.size()>0 && quantidadeCirculando<maximoQuadrosCirculando && quadroAtual<buffer.size()){
 							Quadro quadro = buffer.get(quadroAtual++);
 							camadaFisica.enviarQuadro(quadro);
@@ -102,7 +100,6 @@ public class Transmissor implements InterfaceTransmissor {
 							if(buffer.size()==0){
 								servicoIniciado = false;
 								output.println("Serviço parado");
-								System.out.println("quantidadeCirculando = " + quantidadeCirculando);
 								//zerar
 								quantidadeCirculando = 0;
 								for(int i=0;i<timeoutvalido.length;i++){
@@ -111,17 +108,17 @@ public class Transmissor implements InterfaceTransmissor {
 								break;
 							}
 						}
-						Thread.sleep(intervaloEntreQuadros);
+						camadaFisica.sleep(intervaloEntreQuadros);
 					}catch(Exception e){
 						e.printStackTrace();
 					}
 				}
 			}
 		};
-		t.start();
-		
+		threadServico.start();
 	}
 
+	
 	public void enviarMensagem(String mensagem) throws Exception {
 		for(int i=0;i<mensagem.length();i++){
 			Quadro quadro = new Quadro();

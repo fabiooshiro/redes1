@@ -41,6 +41,7 @@ public class MainFrame extends JFrame{
 			animador = new Animador(panelAnimacao);
 			CamadaFisica.setAnimador(animador);
 			transmissor = new Transmissor();
+			
 			receptor = new Receptor();
 			CamadaFisica camadaFisica = CamadaFisica.getInstance();
 			camadaFisica.setReceptor(receptor);

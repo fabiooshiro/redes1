@@ -1,19 +1,18 @@
 package br.unicarioca.ca.redes1.protocolo;
 
 import br.unicarioca.ca.redes1.bo.Animador;
+import br.unicarioca.ca.redes1.bo.FrameAction;
 import br.unicarioca.ca.redes1.ui.MainFrame;
 
 public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 	private static Animador animador;
 	private int numero;
 	private Transmissor transmissor;
-	private long tempoMs;
 	private TimeOut timeOut;
 	private boolean valido;
 	public TimeOut(Transmissor transmissor,final long tempoMs,int numero) throws Exception{
 		valido = true;
 		this.transmissor = transmissor;
-		this.tempoMs = tempoMs;
 		timeOut = this;
 		this.setNumero(numero);
 		this.setDestinoY(MainFrame.Y_TRANSMISSOR - 20);
@@ -25,21 +24,14 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 		this.setFrameInicio(animador.getCurrentFrame());
 		this.setFrameFinal(animador.getCurrentFrame()+1);
 		animador.animar(this);
-		initTimeOut();
-	}
-	private void initTimeOut(){
-		Thread t = new Thread(new Runnable(){
-			public void run() {
-				try{
-					Thread.sleep(tempoMs);
-				}catch(Exception e){
-					
-				}
-				transmissor.receberTimeOut(timeOut);
-			}
+		//Cadastra uma acao para executar no futuro
+		animador.addFrameAction(new FrameAction(animador.getCurrentFrame()+tQ){
+			public void executar() {
+				timeOut.transmissor.receberTimeOut(timeOut);
+			}			
 		});
-		t.start();
 	}
+	
 	public int getNumero() {
 		return numero;
 	}

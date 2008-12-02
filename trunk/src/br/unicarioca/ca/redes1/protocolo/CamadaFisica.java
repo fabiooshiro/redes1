@@ -175,6 +175,10 @@ public class CamadaFisica implements FimAnimacaoListener{
 	public void setOutput(OutPut output) {
 		this.output = output;
 	}
+	/**
+	 * Manda uma interferência
+	 * @throws Exception
+	 */
 	public void interferir() throws Exception{
 		Raio raio = new Raio();
 		Raio raio2 = new Raio();
@@ -218,5 +222,14 @@ public class CamadaFisica implements FimAnimacaoListener{
 				}
 			}
 		});
+	}
+	public void pausar() {
+		animador.stop();
+	}
+	public void continuar(){
+		animador.play();
+	}
+	public void sleep(long intervalo) {
+		animador.sleep(intervalo);	
 	}
 }

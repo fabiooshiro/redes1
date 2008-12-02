@@ -28,6 +28,7 @@ public class PanelControle extends JPanel implements OutPut {
 	JButton btnInterferencia;
 
 	JButton btnAplicarCamadaFisica;
+	JButton btnPausa;
 	JTextField txtTaxaPerdaQuadro;
 	JTextField txtTaxaPerdaAck;
 	JTextField txtTempo;
@@ -53,6 +54,8 @@ public class PanelControle extends JPanel implements OutPut {
 	JPanel panelOutPut = new JPanel();
 	JTextArea textAreaOutPut = new JTextArea();
 
+	boolean pausado = false; 
+	
 	public PanelControle(final MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -60,8 +63,25 @@ public class PanelControle extends JPanel implements OutPut {
 		btnEnviarPacote = new JButton("Enviar");
 		btnTrocaImagem = new JButton("Trocar");
 		btnInterferencia = new JButton("Interferência");
+		btnPausa = new JButton("Pausar");
+		btnPausa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if(pausado){
+						CamadaFisica.getInstance().continuar();
+						btnPausa.setText("Pausar");
+					}else{
+						btnPausa.setText("Continuar");
+						CamadaFisica.getInstance().pausar();
+					}
+					pausado=!pausado;
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(mainFrame, e.getMessage());
+				}
+			}
+		});
 		btnInterferencia.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					CamadaFisica.getInstance().interferir();
@@ -136,7 +156,7 @@ public class PanelControle extends JPanel implements OutPut {
 		panelTransmissor.setLayout(new GridLayout(0, 2));
 
 		panelTransmissor.add(btnInterferencia);
-		panelTransmissor.add(new JLabel());
+		panelTransmissor.add(btnPausa);
 
 		panelTransmissor.add(chkMostrarHistorico);
 		panelTransmissor.add(new JLabel());
