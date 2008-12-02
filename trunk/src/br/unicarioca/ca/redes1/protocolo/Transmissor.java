@@ -41,8 +41,8 @@ public class Transmissor implements InterfaceTransmissor {
 		}
 		if(buffer.size()>0 && buffer.get(0).getNumero()==ack.getNumero()){
 			buffer.remove(0);
-			if(quadroAtual>=0)
-				quadroAtual--;
+			//if(quadroAtual>=0)
+			quadroAtual--;
 		}
 	}
 
@@ -118,11 +118,11 @@ public class Transmissor implements InterfaceTransmissor {
 		threadServico.start();
 	}
 
-	
+	private int mumQuadro=0;
 	public void enviarMensagem(String mensagem) throws Exception {
 		for(int i=0;i<mensagem.length();i++){
 			Quadro quadro = new Quadro();
-			quadro.setNumero(i%totalNumeros);
+			quadro.setNumero(mumQuadro++%totalNumeros);
 			quadro.setDado(mensagem.charAt(i)+"");
 			if(i==0){
 				quadro.setCabecalho("ini");

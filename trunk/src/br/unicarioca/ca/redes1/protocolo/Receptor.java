@@ -1,5 +1,6 @@
 package br.unicarioca.ca.redes1.protocolo;
 
+import br.unicarioca.ca.redes1.bo.Tela;
 import br.unicarioca.ca.redes1.vo.Ack;
 import br.unicarioca.ca.redes1.vo.Quadro;
 
@@ -13,6 +14,7 @@ public class Receptor {
 	private static final String ESTADO_AGUARDANDO = "Aguardando novas";
 	private static final String ESTADO_RECEBENDO = "recebendo novas";
 	private String estado = ESTADO_AGUARDANDO;
+	private Tela tela;
 	public void receberQuadro(Quadro quadro) throws Exception{
 		output.println("Receptor recebendo quadro "+quadro.getId());
 		//System.out.println("quadrosRecebidos=" + quadrosRecebidos);
@@ -42,11 +44,23 @@ public class Receptor {
 			camadaFisica.enviarAck(ack);
 		}
 		output.println("mensagemRecebida=" + mensagemRecebida);
+		if(tela!=null){
+			tela.setMensagemRecebida(mensagemRecebida);
+		}
 	}
 	public OutPut getOutput() {
 		return output;
 	}
 	public void setOutput(OutPut output) {
 		this.output = output;
+	}
+	public String getMensagemRecebida() {
+		return mensagemRecebida;
+	}
+	public void setMensagemRecebida(String mensagemRecebida) {
+		this.mensagemRecebida = mensagemRecebida;
+	}
+	public void setTela(Tela tela) {
+		this.tela = tela;
 	}
 }

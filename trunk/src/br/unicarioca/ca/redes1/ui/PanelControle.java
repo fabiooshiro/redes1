@@ -261,7 +261,7 @@ public class PanelControle extends JPanel implements OutPut {
 					maximoQuadrosCirculando);
 			this.mainFrame.getTransmissor().setTempoTimeOut(tempoTimeOut);
 			this.mainFrame.getTransmissor().setIntervaloEntreQuadros(intervalo);
-			// this.mainFrame.enviarMensagem("Olá mundo!");
+			//this.mainFrame.enviarMensagem();
 			this.mainFrame.enviarQuadros(qtd);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
