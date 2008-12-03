@@ -56,7 +56,7 @@ public class Receptor {
 				}
 				ini++;
 			}
-			output.println(buffer.substring(1));
+			output.println("\tReceptor buffer = " + buffer.substring(1));
 			if(enviarAck){
 				Ack ack = new Ack();
 				ack.setNumero(quadro.getNumero());

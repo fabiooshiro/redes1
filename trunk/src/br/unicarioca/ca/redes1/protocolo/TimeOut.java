@@ -1,6 +1,5 @@
 package br.unicarioca.ca.redes1.protocolo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import br.unicarioca.ca.redes1.bo.Animador;
@@ -17,11 +16,7 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 	public TimeOut(Transmissor transmissor,final long tempoMs,int numero) throws Exception{
 		//invalidar o antigo com o mesmo numero
 		{
-			TimeOut old = timeOuts.get(numero);
-			if(old!=null){
-				System.out.println("invalidando timeout " + numero);
-				old.setValido(false);
-			}
+			invalidar(numero);
 			timeOuts.put(numero,this);
 		}
 		valido = true;
@@ -63,6 +58,13 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 	}
 	public void setValido(boolean valido) {
 		this.valido = valido;
+	}
+
+	public static void invalidar(int numero) {
+		TimeOut old = timeOuts.get(numero);
+		if(old!=null){
+			old.setValido(false);
+		}		
 	}
 	
 }

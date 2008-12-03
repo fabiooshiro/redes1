@@ -122,7 +122,9 @@ public class CamadaFisica implements FimAnimacaoListener{
 		CamadaFisica.animador = animador;
 		TimeOut.setAnimador(animador);
 	} 
-	
+	public int getTotalQuadrosCirculando(){
+		return quadrosCirculando.size();
+	}
 	public void fimDaAnimacao(Animavel animavel)throws Exception {
 		if(animavel.y>MainFrame.Y_RECEPTOR-1){
 			Quadro quadro = quadrosCirculando.get(animavel.getId());

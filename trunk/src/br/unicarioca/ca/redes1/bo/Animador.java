@@ -48,16 +48,17 @@ public class Animador {
 	 * Qualquer semelhança com o Flash é mera coincidência
 	 */
 	private void onEnterFrame() throws Exception{
-		ArrayList<FrameAction> remover = new ArrayList<FrameAction>();
-		for(FrameAction fa: frameActions){
-			if(fa.getFrame()==(frameCounter)){
-				fa.executar();
-				remover.add(fa);
-				
+		synchronized (this) {
+			ArrayList<FrameAction> remover = new ArrayList<FrameAction>();
+			for(FrameAction fa: frameActions){
+				if(fa.getFrame()==(frameCounter)){
+					fa.executar();
+					remover.add(fa);
+				}
 			}
-		}
-		for(FrameAction fa: remover){
-			frameActions.remove(fa);
+			for(FrameAction fa: remover){
+				frameActions.remove(fa);
+			}
 		}
 	}
 	
@@ -210,7 +211,9 @@ public class Animador {
 	}
 
 	public void addFrameAction(FrameAction frameAction) {
-		frameActions.add(frameAction);
+		synchronized (this) {
+			frameActions.add(frameAction);
+		}
 	}
 
 	private long tempoDiff = 0;
