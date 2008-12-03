@@ -58,7 +58,7 @@ public class Transmissor implements InterfaceTransmissor {
 	}
 
 	public void receberTimeOut(TimeOut timeOut) {
-		output.println("Recebendo TimeOut "+timeOut.getNumero());
+		output.println("Transmissor recebendo TimeOut "+timeOut.getNumero());
 		quantidadeCirculando--;
 		try{
 			//reenviar quadros a partir do timeout

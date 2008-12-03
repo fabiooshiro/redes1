@@ -72,7 +72,7 @@ public class CamadaFisica implements FimAnimacaoListener{
 	 * @param quadro
 	 */
 	public void enviarQuadro(Quadro quadro) throws Exception{
-		output.println("Camada Física enviando quadro "+ quadro.getNumero());
+		output.println("\tCamada Física enviando quadro "+ quadro.getNumero());
 		quadro.setId(autoIncAnimacao++);
 		quadro.setOrigemX(MainFrame.X_TRANSMISSOR-5);
 		quadro.setOrigemY(MainFrame.Y_TRANSMISSOR);

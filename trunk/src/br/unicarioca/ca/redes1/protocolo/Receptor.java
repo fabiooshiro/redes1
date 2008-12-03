@@ -17,7 +17,7 @@ public class Receptor {
 	private String estado = ESTADO_AGUARDANDO;
 	private Tela tela;
 	public void receberQuadro(Quadro quadro) throws Exception{
-		output.println("Receptor recebendo quadro "+quadro.getId());
+		output.println("\t\tReceptor recebendo quadro "+quadro.getId());
 		//System.out.println("quadrosRecebidos=" + quadrosRecebidos);
 		
 		
@@ -40,9 +40,9 @@ public class Receptor {
 			camadaFisica.enviarAck(ack);
 		}else{
 			if(!estado.equals(ESTADO_RECEBENDO)){
-				output.println("\tReceptor não recebendo");
+				output.println("\t\tReceptor não recebendo");
 			}else{
-				output.println("\tReceptor aguardando "+sequencial);
+				output.println("\t\tReceptor aguardando "+sequencial);
 			}
 			//verificar se o quadro esta na lista dos que foram recebidos
 			boolean enviarAck = false;
@@ -56,14 +56,14 @@ public class Receptor {
 				}
 				ini++;
 			}
-			output.println("\tReceptor buffer = " + buffer.substring(1));
+			output.println("\t\tReceptor buffer = " + buffer.substring(1));
 			if(enviarAck){
 				Ack ack = new Ack();
 				ack.setNumero(quadro.getNumero());
 				camadaFisica.enviarAck(ack);
 			}
 		}
-		output.println("mensagemRecebida=" + mensagemRecebida);
+		output.println("\t\tmensagemRecebida=" + mensagemRecebida);
 		if(tela!=null){
 			tela.setMensagemRecebida(mensagemRecebida);
 		}
