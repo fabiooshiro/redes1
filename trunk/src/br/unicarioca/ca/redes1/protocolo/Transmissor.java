@@ -35,15 +35,19 @@ public class Transmissor implements InterfaceTransmissor {
 	
 	public void receberAck(Ack ack) {
 		synchronized (this) {
-			output.println("Transmissor recebendo ack "+ack.getNumero());
-			if(timeoutvalido[ack.getNumero()]){
-				timeoutvalido[ack.getNumero()] = false;
-				quantidadeCirculando--;
-			}
-			if(buffer.size()>0 && buffer.get(0).getNumero()==ack.getNumero()){
-				buffer.remove(0);
-				//if(quadroAtual>=0)
-				quadroAtual--;
+			try{
+				output.println("Transmissor recebendo ack "+ack.getNumero());
+				if(timeoutvalido[ack.getNumero()]){
+					timeoutvalido[ack.getNumero()] = false;
+					quantidadeCirculando--;
+				}
+				if(buffer.size()>0 && buffer.get(0).getNumero()==ack.getNumero()){
+					buffer.remove(0);
+					//if(quadroAtual>=0)
+					quadroAtual--;
+				}
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 	}
@@ -93,8 +97,8 @@ public class Transmissor implements InterfaceTransmissor {
 				while(true){
 					try{
 						if(buffer.size()>0 && quantidadeCirculando<maximoQuadrosCirculando && quadroAtual<buffer.size()){
-							synchronized (this) {
-								if(quadroAtual>=-1){
+							synchronized (transmissor) {
+								if(quadroAtual>=0){
 									Quadro quadro = buffer.get(quadroAtual++);
 									camadaFisica.enviarQuadro(quadro);
 									new TimeOut(transmissor,tempoTimeOut,quadro.getNumero());

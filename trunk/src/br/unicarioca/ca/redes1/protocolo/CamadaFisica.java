@@ -197,8 +197,8 @@ public class CamadaFisica implements FimAnimacaoListener{
 		raio2.setFrameFinal(animador.getCurrentFrame()+10);
 		raio.setFrameInicio(animador.getCurrentFrame()+4);
 		raio.setFrameFinal(animador.getCurrentFrame()+14);
-		animador.animar(raio, false);
-		animador.animar(raio2, false);
+		animador.animarSemLogs(raio);
+		animador.animarSemLogs(raio2);
 		animador.addFrameAction(new FrameAction(animador.getCurrentFrame()+5){
 			@Override
 			public void executar() {

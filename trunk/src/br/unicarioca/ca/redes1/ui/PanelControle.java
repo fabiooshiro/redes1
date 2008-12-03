@@ -61,7 +61,7 @@ public class PanelControle extends JPanel implements OutPut {
 		this.mainFrame = mainFrame;
 		JTabbedPane tabbedPane = new JTabbedPane();
 
-		btnEnviarPacote = new JButton("Enviar");
+		btnEnviarPacote = new JButton("Aplicar");
 		btnTrocaImagem = new JButton("Trocar");
 		btnInterferencia = new JButton("Interferência");
 		btnStopAndWait = new JButton("Stop and Wait");
@@ -231,6 +231,7 @@ public class PanelControle extends JPanel implements OutPut {
 		btnStopAndWait.setText("Stop and Wait");
 		txtBitsNumero.setText("3");
 		txtTempoCamadaFisica.setText("3000");
+		txtTimeOut.setText("7500");
 		txtQtd.setText("5");
 		txtIntervalo.setText("1000");
 		txtAckDelay.setText("5");
@@ -294,8 +295,8 @@ public class PanelControle extends JPanel implements OutPut {
 	private void enviar() {
 		try {
 			setupTransmissor();
-			int qtd = Integer.valueOf(txtQtd.getText());
-			this.mainFrame.enviarQuadros(qtd);
+			//int qtd = Integer.valueOf(txtQtd.getText());
+			//this.mainFrame.enviarQuadros(qtd);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}

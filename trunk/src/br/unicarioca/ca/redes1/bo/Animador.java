@@ -97,7 +97,7 @@ public class Animador {
 				}else{
 					drawImage(graphics,mc,(int)mc.animavel.x,(int)mc.animavel.y);
 					//marca a linha do historico
-					if(mc.logar){
+					if(mc.logarPontilhado){
 						drawPoint(hgr,(int)mc.animavel.x-hx+mc._width/2,(int)(mc.animavel.y+mc._height/2));
 						drawPoint(hgrb,(int)mc.animavel.x-hx-800+mc._width/2,(int)(mc.animavel.y+mc._height/2));
 					}
@@ -150,6 +150,15 @@ public class Animador {
 		obj.setBufferedImage(bi);
 		listMovie.add(new Movie(obj));
 	}
+	public void animarSemLogs(Animavel obj) {
+		BufferedImage bi = ImageIO.read(new File(obj.getImagemPath()));
+		obj.setBufferedImage(bi);
+		Movie mov = new Movie(obj);
+		mov.logar = false;
+		mov.logarPontilhado = false;
+		listMovie.add(mov);
+	}
+
 	/**
 	 * 
 	 * @param obj objeto para animar

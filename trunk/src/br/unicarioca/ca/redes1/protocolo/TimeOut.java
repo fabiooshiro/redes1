@@ -1,5 +1,8 @@
 package br.unicarioca.ca.redes1.protocolo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import br.unicarioca.ca.redes1.bo.Animador;
 import br.unicarioca.ca.redes1.bo.FrameAction;
 import br.unicarioca.ca.redes1.ui.MainFrame;
@@ -10,7 +13,17 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 	private Transmissor transmissor;
 	private TimeOut timeOut;
 	private boolean valido;
+	private static HashMap<Integer,TimeOut> timeOuts = new HashMap<Integer,TimeOut>();
 	public TimeOut(Transmissor transmissor,final long tempoMs,int numero) throws Exception{
+		//invalidar o antigo com o mesmo numero
+		{
+			TimeOut old = timeOuts.get(numero);
+			if(old!=null){
+				System.out.println("invalidando timeout " + numero);
+				old.setValido(false);
+			}
+			timeOuts.put(numero,this);
+		}
 		valido = true;
 		this.transmissor = transmissor;
 		timeOut = this;
@@ -27,7 +40,9 @@ public class TimeOut extends br.unicarioca.ca.redes1.vo.TimeOut{
 		//Cadastra uma acao para executar no futuro
 		animador.addFrameAction(new FrameAction(animador.getCurrentFrame()+tQ){
 			public void executar() {
-				timeOut.transmissor.receberTimeOut(timeOut);
+				if(valido){
+					timeOut.transmissor.receberTimeOut(timeOut);
+				}
 			}			
 		});
 	}
