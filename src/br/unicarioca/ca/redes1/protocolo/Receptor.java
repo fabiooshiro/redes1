@@ -39,10 +39,29 @@ public class Receptor {
 			}
 			camadaFisica.enviarAck(ack);
 		}else{
-			output.println("\tReceptor aguardando "+sequencial);
-			Ack ack = new Ack();
-			ack.setNumero(quadro.getNumero());
-			camadaFisica.enviarAck(ack);
+			if(!estado.equals(ESTADO_RECEBENDO)){
+				output.println("\tReceptor não recebendo");
+			}else{
+				output.println("\tReceptor aguardando "+sequencial);
+			}
+			//verificar se o quadro esta na lista dos que foram recebidos
+			boolean enviarAck = false;
+			int ini = sequencial+(totalNumeros/2);
+			String buffer="";
+			for(int i=0;i<totalNumeros/2;i++){
+				buffer+=","+ini%totalNumeros;
+				if(ini%totalNumeros==quadro.getNumero()){
+					enviarAck = true;
+					//break;
+				}
+				ini++;
+			}
+			output.println(buffer.substring(1));
+			if(enviarAck){
+				Ack ack = new Ack();
+				ack.setNumero(quadro.getNumero());
+				camadaFisica.enviarAck(ack);
+			}
 		}
 		output.println("mensagemRecebida=" + mensagemRecebida);
 		if(tela!=null){

@@ -15,6 +15,7 @@ public class Movie {
 	int _height;
 	int _width;
 	boolean logar = true;
+	boolean logarPontilhado = true;
 	BufferedImage image;
 	Animavel animavel;
 	public Movie(Animavel animavel){
