@@ -30,17 +30,18 @@ public class Transmissor implements InterfaceTransmissor {
 	Thread threadServico;
 	public Transmissor(){
 		tempoTimeOut = getDefaultTimeOut();
+		while(buffer.size()>0){
+			buffer.remove(0);
+		}
 	}
 	
 	
 	public void receberAck(Ack ack) {
 		synchronized (this) {
 			try{
+				TimeOut.invalidar(ack.getNumero());
 				output.println("Transmissor recebendo ack "+ack.getNumero());
-				if(timeoutvalido[ack.getNumero()]){
-					timeoutvalido[ack.getNumero()] = false;
-					quantidadeCirculando--;
-				}
+				quantidadeCirculando--;
 				if(buffer.size()>0 && buffer.get(0).getNumero()==ack.getNumero()){
 					buffer.remove(0);
 					//if(quadroAtual>=0)
@@ -58,21 +59,18 @@ public class Transmissor implements InterfaceTransmissor {
 
 	public void receberTimeOut(TimeOut timeOut) {
 		output.println("Recebendo TimeOut "+timeOut.getNumero());
-		if(timeoutvalido[timeOut.getNumero()]){
-			timeoutvalido[timeOut.getNumero()] = false;
-			quantidadeCirculando--;
-			try{
-				//reenviar quadros a partir do timeout
-				for(int i=0;i<buffer.size() && i<quadroAtual;i++){
-					if(buffer.get(i).getNumero()==timeOut.getNumero()){
-						quadroAtual = i;
-						break;
-					}
+		quantidadeCirculando--;
+		try{
+			//reenviar quadros a partir do timeout
+			for(int i=0;i<buffer.size() && i<quadroAtual;i++){
+				if(buffer.get(i).getNumero()==timeOut.getNumero()){
+					quadroAtual = i;
+					break;
 				}
-				servico();
-			}catch(Exception e){
-				e.printStackTrace();
 			}
+			servico();
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
@@ -97,6 +95,7 @@ public class Transmissor implements InterfaceTransmissor {
 				while(true){
 					try{
 						if(buffer.size()>0 && quantidadeCirculando<maximoQuadrosCirculando && quadroAtual<buffer.size()){
+						//if(buffer.size()>0 && buffer.size()<=maximoQuadrosCirculando && quadroAtual<buffer.size()){
 							synchronized (transmissor) {
 								if(quadroAtual>=0){
 									Quadro quadro = buffer.get(quadroAtual++);
@@ -117,6 +116,12 @@ public class Transmissor implements InterfaceTransmissor {
 								}
 								break;
 							}
+						}
+						//System.out.println("quantidadeCirculando = " + quantidadeCirculando + " buffer.size="+buffer.size());
+						//como nao recebe nem timeout nem ack?
+						if(quantidadeCirculando>buffer.size()){
+							//System.out.println("Corrigindo quantidadeCirculando...");
+							quantidadeCirculando = buffer.size();
 						}
 						camadaFisica.sleep(intervaloEntreQuadros);
 					}catch(Exception e){
